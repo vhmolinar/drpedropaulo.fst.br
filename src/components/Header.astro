@@ -1,5 +1,4 @@
 ---
-import Social from './Social.astro';
 
 export interface Props {
 	subtitle: string;
@@ -10,11 +9,12 @@ export interface Props {
 const { subtitle, title, tagline } = Astro.props;
 ---
 
-<div>
-    <div class="mx-auto max-w-7xl pt-8 lg:pt-16 pb-5 px-4 sm:px-6 lg:px-8">
+<header>
+    <h1 class="invisible text-sm">Fisioterapia Uberlândia | Pilates Uberlândia</h1>
+    <div class="mx-auto max-w-7xl pt-8 lg:pt-12 pb-5 px-4 sm:px-6 lg:px-8">
         <div class="text-center">
 
-            <img class="mx-auto h-40 w-40 rounded-full shadow-md" src="avatar.png" alt="">
+            <img class="mx-auto h-40 w-40 rounded-full shadow-md" src="avatar.png" alt="fisioterapeuta">
             
             <p class="mt-5 text-3xl font-bold tracking-tight text-gray-900 lg:text-4xl">
                 {title}
@@ -33,4 +33,4 @@ const { subtitle, title, tagline } = Astro.props;
             </p>
         </div>
     </div>
-</div>
+</header>
