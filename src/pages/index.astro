@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Link from "../components/Link.astro";
+import Footer from "../components/Footer.astro";
+
+import { 
+    SUBTITLE, 
+    TITLE, 
+    TAGLINE,
+} from "../config";
+
+// fetch all Markdown files in the links directory
+const links = await Astro.glob("./links/*.md");
+---
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11167286553');
+</script>
+
+<Layout title={TITLE}>
+	
+    <Header subtitle={SUBTITLE} title={TITLE} tagline={TAGLINE} />
+
+    <section>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-3xl">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {
+                        links.map((link) => (
+                            <Link
+                                icon={link.frontmatter.icon}
+                                title={link.frontmatter.title}
+                                href={link.frontmatter.href}
+                            />
+                        ))
+                    }
+                </div>
+                <div class="mx-auto mt-12 lg:flex lg:gap-8">
+                    <img src="estudio.jpg" class="lg:w-1/2 rounded-xl"
+                        alt="Estúdio de Pilates e fisioterapia"/>
+                    <div class="mt-4 lg:mt-0">
+                        <p class="font-bold text-primary">Onde estamos:</p>
+                        <p class="mb-4">Avenida Cesário Alvim, 521</p>
+                        <p class="font-bold text-primary">Horário de atendimento:</p>
+                        <p class="mb-4">07:00 às 11:00 e 16:00 às 20:00</p>
+                        <p class="font-bold text-primary">Modalidades:</p>
+                        <p>Pilates particular ou GYMPASS - PLANO SILVER</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<Footer
+		title={TITLE}
+		tagline={TAGLINE}
+	/>
+
+</Layout>
