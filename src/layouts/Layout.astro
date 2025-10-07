@@ -48,12 +48,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<!-- Bing Webmaster -->
 		<meta name="msvalidate.01" content="267107383D9B3EECFB2E656246BCA0E3" />
 
-		<!-- Google Tag Manager -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
+		<!-- Google Analytics 4 + Google Ads -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 		<script>
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
+
+		  // Google Analytics 4
+		  gtag('config', 'G-XXXXXXXXXX', {
+		    page_path: window.location.pathname,
+		  });
+
+		  // Google Ads Conversion
 		  gtag('config', 'AW-11167286553');
 		</script>
 
