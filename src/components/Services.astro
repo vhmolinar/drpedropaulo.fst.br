@@ -1,0 +1,64 @@
+---
+const services = [
+	{
+		title: "Pilates",
+		description: "Método completo que trabalha corpo e mente, melhorando postura, flexibilidade e força muscular através de exercícios controlados e personalizados.",
+		icon: "💪"
+	},
+	{
+		title: "Fisioterapia",
+		description: "Tratamento especializado para reabilitação de lesões, recuperação pós-operatória e alívio de dores crônicas com técnicas modernas e eficazes.",
+		icon: "🩺"
+	},
+	{
+		title: "Treinamento Funcional",
+		description: "Exercícios que simulam movimentos do dia a dia, melhorando condicionamento físico, equilíbrio e qualidade de vida de forma integrada.",
+		icon: "🏃"
+	},
+	{
+		title: "Massagem Terapêutica",
+		description: "Técnicas manuais para relaxamento muscular, redução de tensões, melhora da circulação e bem-estar geral do corpo.",
+		icon: "💆"
+	}
+];
+---
+
+<section id="servicos" class="py-16 lg:py-24 bg-gray-50">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="text-center">
+			<h2 class="text-3xl font-bold tracking-tight text-black sm:text-4xl">
+				Nossos Serviços
+			</h2>
+			<p class="mt-4 text-lg text-black/70 max-w-2xl mx-auto">
+				Oferecemos uma gama completa de tratamentos para cuidar da sua saúde e bem-estar
+			</p>
+		</div>
+
+		<div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+			{services.map((service) => (
+				<div class="relative flex flex-col items-center rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl">
+					<div class="text-6xl mb-4">
+						{service.icon}
+					</div>
+					<h3 class="text-xl font-semibold text-black mb-3">
+						{service.title}
+					</h3>
+					<p class="text-center text-black/70 leading-relaxed">
+						{service.description}
+					</p>
+				</div>
+			))}
+		</div>
+
+		<div class="mt-12 text-center">
+			<a
+				href="https://wa.me/5534984143510?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços."
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-block rounded-lg bg-black px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-black/90"
+			>
+				Saiba Mais
+			</a>
+		</div>
+	</div>
+</section>

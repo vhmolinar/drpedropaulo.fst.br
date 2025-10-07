@@ -1,46 +1,121 @@
 ---
 export interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = "Pilates e Reabilitação personalizada em Uberlândia. Fisioterapia, Pilates, Treinamento Funcional e Massagem. Atendimento personalizado com estrutura local completa."
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Pedro Paulo | Fisioterapia e Pilates Uberlândia</title>
-		<meta name="description" content="Fisioterapia e estúdio de Pilates em Uberlândia. Oferecemos tratamentos para todas as idades e condições físicas.">
-		<meta name="keywords" content="pedro paulo, fisioterapeuta, pilates, uberlândia">
-		<meta property="og:site_name" content="Dr. Pedro Paulo">
-		<meta property="og:title" content="Dr. Pedro Paulo" />
-		<meta property="og:url" content="https://drpedropaulo.fst.br" />
-		<meta property="og:description" content="Fisioterapia e estúdio de Pilates em Uberlândia. Oferecemos tratamentos para todas as idades e condições físicas." />
-		<meta property="og:image:secure_url" itemprop="image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg">
-		<meta property="og:image" itemprop="image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg">
+
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<meta name="keywords" content="pilates uberlândia, fisioterapia uberlândia, reabilitação, treinamento funcional, massagem, dr pedro paulo molinar, fisioterapeuta, gympass" />
+		<meta name="author" content="Dr. Pedro Paulo Molinar" />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:updated_time" content="1695344259181" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+		<meta property="og:image:secure_url" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+		<meta property="og:site_name" content="Dr. Pedro Paulo Molinar" />
+		<meta property="og:locale" content="pt_BR" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+
+		<!-- Bing Webmaster -->
 		<meta name="msvalidate.01" content="267107383D9B3EECFB2E656246BCA0E3" />
+
+		<!-- Google Tag Manager -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'AW-11167286553');
+		</script>
+
+		<!-- Structured Data / Schema.org -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "MedicalBusiness",
+			"@id": "https://drpedropaulo.fst.br",
+			"name": "Dr. Pedro Paulo Molinar - Fisioterapia e Pilates",
+			"description": "Pilates e Reabilitação personalizada em Uberlândia",
+			"url": "https://drpedropaulo.fst.br",
+			"telephone": "+5534984143510",
+			"priceRange": "$$",
+			"image": "https://drpedropaulo.fst.br/avatar-whatsapp.jpg",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Avenida Cesário Alvim, 521",
+				"addressLocality": "Uberlândia",
+				"addressRegion": "MG",
+				"addressCountry": "BR"
+			},
+			"geo": {
+				"@type": "GeoCoordinates",
+				"latitude": -18.9186,
+				"longitude": -48.2772
+			},
+			"openingHoursSpecification": [
+				{
+					"@type": "OpeningHoursSpecification",
+					"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+					"opens": "07:00",
+					"closes": "11:00"
+				},
+				{
+					"@type": "OpeningHoursSpecification",
+					"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+					"opens": "16:00",
+					"closes": "20:00"
+				}
+			],
+			"medicalSpecialty": ["Physiotherapy", "Pilates", "Rehabilitation"],
+			"paymentAccepted": ["Cash", "Credit Card", "Gympass"],
+			"sameAs": [
+				"https://www.instagram.com/drpedropaulomolinar"
+			]
+		}
+		</script>
 	</head>
-	<body>
+	<body class="bg-white text-black antialiased">
 		<slot />
 	</body>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
 	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+		scroll-behavior: smooth;
 	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
+
+	body {
+		margin: 0;
+		padding: 0;
 	}
 </style>

@@ -1,0 +1,57 @@
+---
+const reasons = [
+	{
+		title: "Atendimento Personalizado",
+		description: "Cada paciente recebe um plano de tratamento único, desenvolvido especialmente para suas necessidades e objetivos.",
+		icon: "👤"
+	},
+	{
+		title: "Estrutura Local Completa",
+		description: "Ambiente equipado com tudo o que você precisa para seu tratamento, em um espaço confortável e acolhedor.",
+		icon: "🏢"
+	},
+	{
+		title: "Profissional Qualificado",
+		description: "Formação pela Universidade Federal de Uberlândia com atualização constante em técnicas modernas de reabilitação.",
+		icon: "🎓"
+	},
+	{
+		title: "Aceita Gympass",
+		description: "Facilidade de pagamento através do Gympass (Plano Silver), além de atendimentos particulares.",
+		icon: "💳"
+	}
+];
+---
+
+<section id="diferenciais" class="py-16 lg:py-24 bg-white">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="text-center">
+			<h2 class="text-3xl font-bold tracking-tight text-black sm:text-4xl">
+				Por Que Escolher Nosso Atendimento?
+			</h2>
+			<p class="mt-4 text-lg text-black/70 max-w-2xl mx-auto">
+				Cuidado de qualidade que faz a diferença na sua recuperação
+			</p>
+		</div>
+
+		<div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+			{reasons.map((reason) => (
+				<div class="flex gap-6 rounded-2xl border-2 border-primary/30 bg-primary/5 p-6 transition-all hover:border-primary hover:shadow-lg">
+					<div class="flex-shrink-0">
+						<div class="flex h-16 w-16 items-center justify-center rounded-xl bg-primary text-3xl">
+							{reason.icon}
+						</div>
+					</div>
+					<div>
+						<h3 class="text-xl font-semibold text-black mb-2">
+							{reason.title}
+						</h3>
+						<p class="text-black/70 leading-relaxed">
+							{reason.description}
+						</p>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
