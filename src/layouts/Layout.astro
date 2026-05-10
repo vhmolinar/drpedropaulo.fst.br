@@ -1,46 +1,133 @@
 ---
 export interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = "Fisioterapeuta em Uberlândia-MG. Dr. Pedro Paulo Molinar, formado pela UFU, especialista em reabilitação funcional, Pilates clínico e fisioterapia ortopédica. Agende pelo WhatsApp.",
+} = Astro.props;
+
+const schema = JSON.stringify({
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "LocalBusiness",
+			"@id": "https://drpedropaulo.fst.br/#business",
+			"name": "Dr. Pedro Paulo Molinar – Fisioterapia e Pilates",
+			"description": "Fisioterapia, reabilitação funcional e estúdio de Pilates em Uberlândia-MG. Atendimento particular e Gympass.",
+			"url": "https://drpedropaulo.fst.br",
+			"telephone": "+55-34-98414-3510",
+			"image": "https://drpedropaulo.fst.br/avatar-whatsapp.jpg",
+			"priceRange": "$$",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Avenida Cesário Alvim, 521",
+				"addressLocality": "Uberlândia",
+				"addressRegion": "MG",
+				"addressCountry": "BR"
+			},
+			"openingHoursSpecification": [
+				{
+					"@type": "OpeningHoursSpecification",
+					"dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+					"opens": "07:00",
+					"closes": "11:00"
+				},
+				{
+					"@type": "OpeningHoursSpecification",
+					"dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+					"opens": "16:00",
+					"closes": "20:00"
+				}
+			],
+			"sameAs": ["https://www.instagram.com/drpedrofisio95/"]
+		},
+		{
+			"@type": "Person",
+			"@id": "https://drpedropaulo.fst.br/#person",
+			"name": "Pedro Paulo Molinar",
+			"jobTitle": "Fisioterapeuta",
+			"alumniOf": {
+				"@type": "CollegeOrUniversity",
+				"name": "Universidade Federal de Uberlândia"
+			},
+			"url": "https://drpedropaulo.fst.br",
+			"image": "https://drpedropaulo.fst.br/avatar-whatsapp.jpg",
+			"sameAs": ["https://www.instagram.com/drpedrofisio95/"]
+		}
+	]
+});
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Pedro Paulo | Fisioterapia e Pilates Uberlândia</title>
-		<meta name="description" content="Fisioterapia e estúdio de Pilates em Uberlândia. Oferecemos tratamentos para todas as idades e condições físicas.">
-		<meta name="keywords" content="pedro paulo, fisioterapeuta, pilates, uberlândia">
-		<meta property="og:site_name" content="Dr. Pedro Paulo">
-		<meta property="og:title" content="Dr. Pedro Paulo" />
-		<meta property="og:url" content="https://drpedropaulo.fst.br" />
-		<meta property="og:description" content="Fisioterapia e estúdio de Pilates em Uberlândia. Oferecemos tratamentos para todas as idades e condições físicas." />
-		<meta property="og:image:secure_url" itemprop="image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg">
-		<meta property="og:image" itemprop="image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg">
+
+		<!-- Primary SEO -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content="fisioterapeuta uberlândia, fisioterapia uberlândia, pilates uberlândia, reabilitação funcional uberlândia, pedro paulo molinar, fisioterapia mg, pilates clínico, fisioterapia ortopédica" />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href="https://drpedropaulo.fst.br" />
+
+		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:updated_time" content="1695344259181" />
+		<meta property="og:url" content="https://drpedropaulo.fst.br" />
+		<meta property="og:site_name" content="Dr. Pedro Paulo Molinar" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+		<meta property="og:locale" content="pt_BR" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+
+		<!-- Bing Verification -->
 		<meta name="msvalidate.01" content="267107383D9B3EECFB2E656246BCA0E3" />
+
+		<!-- Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'AW-11167286553');
+		</script>
+
+		<!-- Inter Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={schema} />
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+	*, *::before, *::after {
+		box-sizing: border-box;
 	}
 	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
+		font-family: 'Inter', system-ui, sans-serif;
+		background-color: #f8fafc;
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
 	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
+	body {
+		margin: 0;
+		padding: 0;
 	}
 </style>

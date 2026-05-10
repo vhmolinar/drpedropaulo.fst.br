@@ -5,17 +5,20 @@ export interface Props {
 }
 
 const { title, tagline } = Astro.props;
+const year = new Date().getFullYear();
 ---
-<footer>
-    <div class="mx-auto max-w-7xl lg:mt-8 pb-12 px-4 sm:px-6 md:flex md:items-center md:justify-center lg:px-8">
-        <div class="mt-8 md:order-1 md:mt-0">
-            <p class="text-center text-base text-sweetblack">
-                &copy; 2023 {title}. {tagline}
-            </p>
-            <!-- <p class="text-center text-base text-gray-400">
-                Make with <a href="https://github.com/yoanbernabeu/LinkTreeFreeClone" class="text-indigo-600">LinkTreeFreeClone</a>
-            </p> -->
-            <img src="fisioterapia.png" class="mx-auto w-12" />
-        </div>
-    </div>
+
+<footer style="background: #0f172a;">
+	<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+		<div class="flex flex-col items-center gap-4 text-center">
+			<div class="flex items-center gap-3">
+				<img src="fisioterapia.png" class="w-8 h-8 opacity-70" alt="Fisioterapia ícone" />
+				<span class="font-semibold" style="color: #94a3b8;">{title}</span>
+			</div>
+			<p class="text-sm" style="color: #64748b;">{tagline}</p>
+			<p class="text-xs" style="color: #475569;">
+				&copy; {year} {title}. Todos os direitos reservados.
+			</p>
+		</div>
+	</div>
 </footer>

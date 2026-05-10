@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://drpedropaulo.fst.br/sitemap.xml

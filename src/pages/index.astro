@@ -4,62 +4,223 @@ import Header from "../components/Header.astro";
 import Link from "../components/Link.astro";
 import Footer from "../components/Footer.astro";
 
-import { 
-    SUBTITLE, 
-    TITLE, 
-    TAGLINE,
+import {
+	SUBTITLE,
+	TITLE,
+	TAGLINE,
 } from "../config";
 
-// fetch all Markdown files in the links directory
 const links = await Astro.glob("./links/*.md");
 ---
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'AW-11167286553');
-</script>
+<Layout title="Dr. Pedro Paulo Molinar | Fisioterapeuta em Uberlândia-MG">
 
-<Layout title={TITLE}>
-	
-    <Header subtitle={SUBTITLE} title={TITLE} tagline={TAGLINE} />
+	<Header subtitle={SUBTITLE} title={TITLE} tagline={TAGLINE} />
 
-    <section>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mx-auto max-w-3xl">
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {
-                        links.map((link) => (
-                            <Link
-                                icon={link.frontmatter.icon}
-                                title={link.frontmatter.title}
-                                href={link.frontmatter.href}
-                            />
-                        ))
-                    }
-                </div>
-                <div class="mx-auto mt-12 lg:flex lg:gap-8">
-                    <img src="estudio.jpg" class="lg:w-1/2 rounded-xl"
-                        alt="Estúdio de Pilates e fisioterapia em Uberlândia"/>
-                    <div class="mt-4 lg:mt-0">
-                        <p class="font-bold text-primary">Onde estamos:</p>
-                        <p class="mb-4 text-sweetblack">Avenida Cesário Alvim, 521</p>
-                        <p class="font-bold text-primary">Horário de atendimento:</p>
-                        <p class="mb-4 text-sweetblack">07:00 às 11:00 e 16:00 às 20:00</p>
-                        <p class="font-bold text-primary">Modalidades:</p>
-                        <p class="text-sweetblack">Atendimentos particulares ou Gympass (Plano Silver)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+	<!-- Trust Strip -->
+	<section style="background: #ffffff; border-bottom: 1px solid #e2e8f0;">
+		<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6">
+			<div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
+				<div class="flex items-center gap-2">
+					<svg class="w-5 h-5 flex-shrink-0" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+					</svg>
+					<span class="text-sm font-medium" style="color: #374151;">Formado pela UFU</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<svg class="w-5 h-5 flex-shrink-0" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					</svg>
+					<span class="text-sm font-medium" style="color: #374151;">Atendimento Particular</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<svg class="w-5 h-5 flex-shrink-0" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					</svg>
+					<span class="text-sm font-medium" style="color: #374151;">Gympass – Plano Silver</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<svg class="w-5 h-5 flex-shrink-0" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+					</svg>
+					<span class="text-sm font-medium" style="color: #374151;">Uberlândia – MG</span>
+				</div>
+			</div>
+		</div>
+	</section>
 
-	<Footer
-		title={TITLE}
-		tagline={TAGLINE}
-	/>
+	<!-- Services Section -->
+	<section style="background: #f8fafc;" class="py-16 lg:py-24">
+		<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-12">
+				<p class="text-xs font-bold tracking-widest uppercase mb-2" style="color: #0f766e; letter-spacing: 0.2em;">Especialidades</p>
+				<h2 class="text-3xl lg:text-4xl font-extrabold" style="color: #0f172a;">O que oferecemos</h2>
+				<p class="mt-3 text-base max-w-xl mx-auto" style="color: #64748b;">Tratamentos personalizados para restaurar seu movimento, aliviar dores e melhorar sua qualidade de vida.</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				<!-- Fisioterapia Card -->
+				<div class="rounded-2xl p-7 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1" style="background: #ffffff; border: 1px solid #e2e8f0;">
+					<div class="flex items-center justify-center w-12 h-12 rounded-xl mb-5" style="background: #f0fdfa;">
+						<svg class="w-6 h-6" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+						</svg>
+					</div>
+					<h3 class="text-lg font-bold mb-2" style="color: #0f172a;">Fisioterapia Ortopédica</h3>
+					<p class="text-sm leading-relaxed" style="color: #64748b;">Avaliação e tratamento de lesões musculoesqueléticas, dores articulares, lombalgias e recuperação pós-cirúrgica.</p>
+				</div>
+
+				<!-- Pilates Card -->
+				<div class="rounded-2xl p-7 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1" style="background: #ffffff; border: 1px solid #e2e8f0;">
+					<div class="flex items-center justify-center w-12 h-12 rounded-xl mb-5" style="background: #f0fdfa;">
+						<svg class="w-6 h-6" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+						</svg>
+					</div>
+					<h3 class="text-lg font-bold mb-2" style="color: #0f172a;">Pilates Clínico</h3>
+					<p class="text-sm leading-relaxed" style="color: #64748b;">Método Pilates aplicado terapeuticamente para fortalecimento do core, melhora da postura, flexibilidade e equilíbrio.</p>
+				</div>
+
+				<!-- Reabilitação Card -->
+				<div class="rounded-2xl p-7 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1" style="background: #ffffff; border: 1px solid #e2e8f0;">
+					<div class="flex items-center justify-center w-12 h-12 rounded-xl mb-5" style="background: #f0fdfa;">
+						<svg class="w-6 h-6" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+						</svg>
+					</div>
+					<h3 class="text-lg font-bold mb-2" style="color: #0f172a;">Reabilitação Funcional</h3>
+					<p class="text-sm leading-relaxed" style="color: #64748b;">Protocolos de reabilitação individualizados focados na retomada das atividades do dia a dia e prática esportiva.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Location Section -->
+	<section style="background: #ffffff;" class="py-16 lg:py-24">
+		<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+			<div class="lg:flex lg:gap-14 lg:items-center">
+				<!-- Studio Photo -->
+				<div class="lg:w-1/2 mb-10 lg:mb-0">
+					<img
+						src="estudio.jpg"
+						class="w-full rounded-2xl shadow-xl"
+						alt="Estúdio de Pilates e fisioterapia em Uberlândia"
+						loading="lazy"
+					/>
+				</div>
+
+				<!-- Location Details -->
+				<div class="lg:w-1/2">
+					<p class="text-xs font-bold tracking-widest uppercase mb-2" style="color: #0f766e; letter-spacing: 0.2em;">Encontre-nos</p>
+					<h2 class="text-3xl font-extrabold mb-8" style="color: #0f172a;">Localização &amp; Horários</h2>
+
+					<!-- Address -->
+					<div class="flex gap-4 mb-6">
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: #f0fdfa;">
+							<svg class="w-5 h-5" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+								<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+							</svg>
+						</div>
+						<div>
+							<p class="font-semibold text-sm mb-0.5" style="color: #0f172a;">Endereço</p>
+							<p class="text-sm" style="color: #64748b;">Avenida Cesário Alvim, 521</p>
+							<p class="text-sm" style="color: #64748b;">Uberlândia – MG</p>
+						</div>
+					</div>
+
+					<!-- Hours -->
+					<div class="flex gap-4 mb-6">
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: #f0fdfa;">
+							<svg class="w-5 h-5" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+							</svg>
+						</div>
+						<div>
+							<p class="font-semibold text-sm mb-0.5" style="color: #0f172a;">Horário de Atendimento</p>
+							<p class="text-sm" style="color: #64748b;">Segunda a Sexta: 07:00 – 11:00</p>
+							<p class="text-sm" style="color: #64748b;">Segunda a Sexta: 16:00 – 20:00</p>
+						</div>
+					</div>
+
+					<!-- Modalities -->
+					<div class="flex gap-4 mb-8">
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: #f0fdfa;">
+							<svg class="w-5 h-5" style="color: #0f766e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+							</svg>
+						</div>
+						<div>
+							<p class="font-semibold text-sm mb-0.5" style="color: #0f172a;">Modalidades de Pagamento</p>
+							<p class="text-sm" style="color: #64748b;">Atendimento Particular</p>
+							<p class="text-sm" style="color: #64748b;">Gympass – Plano Silver</p>
+						</div>
+					</div>
+
+					<!-- Maps Link -->
+					<a
+						href="https://maps.google.com/?q=Avenida+Ces%C3%A1rio+Alvim+521+Uberl%C3%A2ndia+MG"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 font-semibold text-sm rounded-full px-6 py-3 transition-all duration-200 hover:-translate-y-0.5"
+						style="background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4;"
+						onmouseover="this.style.background='#ccfbf1';"
+						onmouseout="this.style.background='#f0fdfa';"
+					>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/>
+						</svg>
+						Como chegar
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Links Section -->
+	<section style="background: #f8fafc;" class="py-16">
+		<div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-8">
+				<p class="text-xs font-bold tracking-widest uppercase mb-2" style="color: #0f766e; letter-spacing: 0.2em;">Entre em Contato</p>
+				<h2 class="text-2xl font-extrabold" style="color: #0f172a;">Fale conosco agora</h2>
+			</div>
+			<div class="flex flex-col gap-4">
+				{
+					links.map((link) => (
+						<Link
+							icon={link.frontmatter.icon}
+							title={link.frontmatter.title}
+							href={link.frontmatter.href}
+						/>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Banner -->
+	<section style="background: linear-gradient(135deg, #0c4a3a 0%, #0f766e 100%);" class="py-16 lg:py-20">
+		<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+			<h2 class="text-3xl lg:text-4xl font-extrabold text-white mb-3">Pronto para começar?</h2>
+			<p class="text-lg mb-10" style="color: #99f6e4;">Agende sua avaliação fisioterapêutica hoje mesmo. Atendemos você com cuidado e atenção individualizada.</p>
+			<a
+				href="https://wa.me/5534984143510"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center gap-3 font-bold text-lg rounded-full px-10 py-4 text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+				style="background: #16a34a;"
+				onmouseover="this.style.background='#15803d';"
+				onmouseout="this.style.background='#16a34a';"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 flex-shrink-0" fill="currentColor">
+					<path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+				</svg>
+				Agendar Consulta pelo WhatsApp
+			</a>
+		</div>
+	</section>
+
+	<Footer title={TITLE} tagline={TAGLINE} />
 
 </Layout>
