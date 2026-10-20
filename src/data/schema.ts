@@ -23,7 +23,7 @@ export const homeSchema = {
 			"@id": businessId,
 			name: BUSINESS_NAME,
 			alternateName: `${TITLE} – Fisioterapia e Pilates`,
-			description: "Fisioterapia ortopédica, Pilates clínico e reabilitação funcional no Centro de Uberlândia-MG. Atendimento particular e Gympass/Wellhub.",
+			description: "Fisioterapia ortopédica, Pilates clínico, massoterapia e reabilitação funcional no Centro de Uberlândia-MG. Atendimento particular e Gympass/Wellhub.",
 			url: `${SITE_URL}/`,
 			telephone: PHONE_E164,
 			image: [`${SITE_URL}/og-image.jpg`, `${SITE_URL}/media/estudio-pilates-uberlandia.webp`, `${SITE_URL}/avatar-whatsapp.jpg`],
@@ -60,7 +60,7 @@ export const homeSchema = {
 			url: `${SITE_URL}/`,
 			alumniOf: { "@type": "CollegeOrUniversity", name: "Universidade Federal de Uberlândia" },
 			worksFor: { "@id": businessId },
-			knowsAbout: ["Fisioterapia", "Pilates clínico", "Reabilitação funcional", "Fisioterapia ortopédica"],
+			knowsAbout: ["Fisioterapia", "Pilates clínico", "Reabilitação funcional", "Fisioterapia ortopédica", "Massoterapia", "Liberação miofascial"],
 			sameAs: [INSTAGRAM_URL],
 		},
 		{

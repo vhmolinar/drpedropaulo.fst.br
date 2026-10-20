@@ -7,7 +7,7 @@ export interface ServiceSection {
 export interface Service {
 	slug: string;
 	name: string;
-	icon: "spine" | "person" | "refresh" | "trend";
+	icon: "spine" | "person" | "refresh" | "trend" | "hand";
 	seoTitle: string;
 	description: string;
 	eyebrow: string;
@@ -15,6 +15,7 @@ export interface Service {
 	intro: string;
 	summary: string;
 	whatsappSubject: string;
+	payment?: string;
 	media: string;
 	sections: ServiceSection[];
 	indications: string[];
@@ -62,6 +63,12 @@ export const SERVICES: Service[] = [
 					"Mais flexibilidade e mobilidade articular",
 					"Equilíbrio e coordenação",
 					"Alívio de dores ligadas à postura e à falta de movimento",
+				],
+			},
+			{
+				heading: "Relaxamento depois do treino",
+				paragraphs: [
+					"Quem treina no estúdio também pode terminar a aula com uma sessão de massoterapia: massagem relaxante ou liberação miofascial para soltar a musculatura e ajudar o corpo a desacelerar depois do exercício.",
 				],
 			},
 		],
@@ -133,6 +140,60 @@ export const SERVICES: Service[] = [
 			{
 				question: "Quanto tempo dura o tratamento?",
 				answer: "Depende do problema e de como o seu corpo responde. A estimativa é discutida já na avaliação e revista ao longo do tratamento.",
+			},
+		],
+	},
+	{
+		slug: "massoterapia-uberlandia",
+		name: "Massoterapia",
+		icon: "hand",
+		seoTitle: "Massoterapia em Uberlândia | Massagem com fisioterapeuta",
+		description: "Massoterapia no Centro de Uberlândia com fisioterapeuta: massagem relaxante, massagem terapêutica e liberação miofascial em sessões prolongadas ou após o Pilates.",
+		eyebrow: "Massoterapia",
+		h1: "Massoterapia em Uberlândia com fisioterapeuta",
+		intro: "Massagem relaxante, massagem terapêutica e liberação miofascial feitas por um fisioterapeuta, para aliviar tensões musculares e relaxar — em sessões prolongadas ou como complemento ao seu treino de Pilates.",
+		summary: "Massagem relaxante, terapêutica e liberação miofascial, em sessões prolongadas ou após o treino de Pilates.",
+		whatsappSubject: "tenho interesse em uma sessão de massoterapia",
+		payment: "Atendimento particular",
+		media: "/media/massoterapia-uberlandia.webp",
+		sections: [
+			{
+				heading: "Como funciona a sessão",
+				paragraphs: [
+					"Antes de começar, conversamos sobre onde você sente tensão ou desconforto e o que espera da sessão. Com isso, as técnicas e a intensidade são escolhidas para você — do toque mais suave, para relaxar, ao trabalho mais profundo, em pontos de tensão muscular.",
+					"As sessões são conduzidas por um fisioterapeuta, que conhece a anatomia e o funcionamento dos músculos e adapta a massagem às suas condições de saúde.",
+				],
+			},
+			{
+				heading: "Técnicas utilizadas",
+				paragraphs: ["Dependendo do seu objetivo, a sessão combina:"],
+				list: [
+					"Massagem relaxante — movimentos suaves e ritmados para reduzir o estresse e relaxar o corpo",
+					"Massagem terapêutica — trabalho direcionado em regiões com tensão, rigidez ou desconforto muscular",
+					"Liberação miofascial — manual ou com instrumentos, como bastão de rolos e ferramentas de liberação, para soltar a musculatura e a fáscia",
+				],
+			},
+			{
+				heading: "Sessões avulsas ou depois do Pilates",
+				paragraphs: [
+					"Você pode agendar uma sessão avulsa prolongada, dedicada só à massagem, ou fazer um momento de relaxamento logo após o seu treino de Pilates, ajudando o corpo a desacelerar depois do exercício.",
+				],
+			},
+		],
+		indications: ["Tensão muscular", "Estresse", "Dor nas costas e no pescoço", "Rigidez após o treino", "Relaxamento"],
+		reviewKeywords: ["atencioso", "cuidado", "atendimento", "profissional"],
+		faq: [
+			{
+				question: "Preciso fazer Pilates para agendar uma massagem?",
+				answer: "Não. Há sessões avulsas prolongadas, só de massagem. Quem treina Pilates no estúdio também pode fazer um relaxamento após o treino.",
+			},
+			{
+				question: "Qual a diferença entre massagem relaxante e terapêutica?",
+				answer: "A relaxante usa movimentos suaves para reduzir o estresse e relaxar o corpo. A terapêutica é direcionada a regiões com tensão ou desconforto muscular e pode ser mais intensa. Muitas sessões combinam as duas.",
+			},
+			{
+				question: "Como agendo uma sessão?",
+				answer: "Chame no WhatsApp (34) 98414-3510 para ver os horários disponíveis.",
 			},
 		],
 	},

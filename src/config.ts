@@ -2,7 +2,7 @@ export const SITE_URL = "https://drpedropaulo.fst.br"
 export const TITLE = "Dr. Pedro Paulo Molinar"
 export const BUSINESS_NAME = "Molinar Fisioterapia"
 export const SUBTITLE = "Fisioterapeuta pela Universidade Federal de Uberlândia"
-export const TAGLINE = "Fisioterapia, Pilates clínico e reabilitação funcional"
+export const TAGLINE = "Fisioterapia, Pilates clínico, massoterapia e reabilitação funcional"
 
 export const PHONE = "+55 34 98414-3510"
 export const PHONE_E164 = "+5534984143510"

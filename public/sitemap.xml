@@ -8,6 +8,7 @@
     <image:image><image:loc>https://drpedropaulo.fst.br/media/pedro-paulo-molinar-fisioterapeuta.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/media/estudio-pilates-uberlandia.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/media/pilates-alongamento-cadillac.webp</image:loc></image:image>
+    <image:image><image:loc>https://drpedropaulo.fst.br/media/massoterapia-uberlandia.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/og-image.jpg</image:loc></image:image>
   </url>
   <url>
@@ -18,6 +19,12 @@
   </url>
   <url>
     <loc>https://drpedropaulo.fst.br/fisioterapia-ortopedica-uberlandia</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://drpedropaulo.fst.br/massoterapia-uberlandia</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -56,4 +56,12 @@ export const MEDIA: MediaItem[] = [
 		title: "Nosso estúdio",
 		description: "Estúdio de Pilates e fisioterapia no Centro de Uberlândia, equipado com Reformer, Cadillac, Ladder Barrel e Chair.",
 	},
+	{
+		type: "image",
+		src: "/media/massoterapia-uberlandia.webp",
+		width: 480,
+		height: 640,
+		title: "Massoterapia",
+		description: "Bastão de rolos, ferramenta de liberação miofascial e creme de massagem usados nas sessões de massoterapia do estúdio.",
+	},
 ];
