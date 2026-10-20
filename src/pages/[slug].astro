@@ -12,7 +12,7 @@ import reviews from "../data/reviews.json";
 import { MEDIA } from "../data/media";
 import { SERVICES, type Service } from "../data/services";
 import { serviceSchema } from "../data/schema";
-import { ADDRESS, HOURS, INSTAGRAM_URL, MAPS_URL, SUBTITLE, TAGLINE, whatsappUrl } from "../config";
+import { ADDRESS, CREFITO, HOURS, INSTAGRAM_URL, MAPS_URL, SUBTITLE, TAGLINE, whatsappUrl } from "../config";
 
 export function getStaticPaths() {
 	return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
@@ -48,7 +48,7 @@ const rating = reviews.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1
 				<p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-hero-accent">{service.eyebrow}</p>
 				<h1 class="font-display text-4xl font-semibold leading-[1.1] text-hero-fg sm:text-5xl">{service.h1}</h1>
 				<p class="mt-6 max-w-xl text-lg leading-relaxed text-hero-muted">{service.intro}</p>
-				<p class="mt-3 text-sm font-medium text-hero-accent">Dr. Pedro Paulo Molinar · {SUBTITLE}</p>
+				<p class="mt-3 text-sm font-medium text-hero-accent">Dr. Pedro Paulo Molinar · {SUBTITLE} · {CREFITO}</p>
 
 				<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 					<a
@@ -146,7 +146,7 @@ const rating = reviews.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1
 							</div>
 							<div class="flex gap-3">
 								<UiIcon name="card" class="h-5 w-5 flex-none text-primary" />
-								<span>{service.payment ?? "Particular e Gympass (plano Silver)"}</span>
+								<span>{service.payment}</span>
 							</div>
 						</div>
 						<a

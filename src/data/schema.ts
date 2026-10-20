@@ -1,4 +1,5 @@
-import { ADDRESS, BUSINESS_NAME, GEO, INSTAGRAM_URL, MAPS_CID_URL, PHONE_E164, SITE_URL, TITLE } from "../config";
+import { ADDRESS, BUSINESS_NAME, CREFITO, GEO, INSTAGRAM_URL, MAPS_CID_URL, PHONE_E164, SITE_URL, TITLE } from "../config";
+import { EDUCATION } from "./education";
 import { FAQ } from "./faq";
 import { MEDIA } from "./media";
 import { SERVICES, type Service } from "./services";
@@ -30,7 +31,7 @@ export const homeSchema = {
 			logo: `${SITE_URL}/fisioterapia.png`,
 			priceRange: "$$",
 			currenciesAccepted: "BRL",
-			paymentAccepted: "Particular, Gympass/Wellhub",
+			paymentAccepted: "Particular, Gympass/Wellhub (Pilates)",
 			address: {
 				"@type": "PostalAddress",
 				streetAddress: ADDRESS.street,
@@ -60,7 +61,21 @@ export const homeSchema = {
 			url: `${SITE_URL}/`,
 			alumniOf: { "@type": "CollegeOrUniversity", name: "Universidade Federal de Uberlândia" },
 			worksFor: { "@id": businessId },
-			knowsAbout: ["Fisioterapia", "Pilates clínico", "Reabilitação funcional", "Fisioterapia ortopédica", "Massoterapia", "Liberação miofascial"],
+			knowsAbout: ["Fisioterapia", "Fisioterapia ortopédica", "Pilates clínico", "Pilates na gestação", "Pilates para idosos", "Terapia manual", "Massoterapia", "Liberação miofascial", "Reabilitação funcional"],
+			hasCredential: [
+				{
+					"@type": "EducationalOccupationalCredential",
+					credentialCategory: "license",
+					name: CREFITO,
+					recognizedBy: { "@type": "Organization", name: "Conselho Regional de Fisioterapia e Terapia Ocupacional da 4ª Região (CREFITO-4)" },
+				},
+				...EDUCATION.map((c) => ({
+					"@type": "EducationalOccupationalCredential",
+					credentialCategory: "certificate",
+					name: c.name,
+					...(c.school ? { recognizedBy: { "@type": "Organization", name: c.school } } : {}),
+				})),
+			],
 			sameAs: [INSTAGRAM_URL],
 		},
 		{
@@ -116,6 +131,9 @@ export const serviceSchema = (service: Service) => {
 				description: service.description,
 				url,
 				areaServed: { "@type": "City", name: "Uberlândia" },
+				...(service.offers
+					? { offers: service.offers.map((o) => ({ "@type": "Offer", name: o.name, price: o.price.toFixed(2), priceCurrency: "BRL" })) }
+					: {}),
 				provider: {
 					"@type": "Physiotherapy",
 					"@id": businessId,
