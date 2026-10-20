@@ -33,8 +33,8 @@ export const MEDIA: MediaItem[] = [
 	{
 		type: "image",
 		src: "/media/pilates-alongamento-cadillac.webp",
-		width: 720,
-		height: 1280,
+		width: 480,
+		height: 854,
 		title: "Flexibilidade",
 		description: "Aluna realizando alongamento no Cadillac durante aula de Pilates clínico.",
 	},
@@ -51,8 +51,8 @@ export const MEDIA: MediaItem[] = [
 	{
 		type: "image",
 		src: "/media/estudio-pilates-uberlandia.webp",
-		width: 900,
-		height: 1200,
+		width: 480,
+		height: 640,
 		title: "Nosso estúdio",
 		description: "Estúdio de Pilates e fisioterapia no Centro de Uberlândia, equipado com Reformer, Cadillac, Ladder Barrel e Chair.",
 	},

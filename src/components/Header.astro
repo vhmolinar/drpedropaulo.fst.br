@@ -68,12 +68,13 @@ const reel = MEDIA.filter((m) => m.type === "video");
 					<video
 						class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 data-[active=true]:opacity-60"
 						src={video.src}
-						poster={video.poster}
+						poster={i === 0 ? video.poster : undefined}
+						data-poster={i === 0 ? undefined : video.poster}
 						width={video.width}
 						height={video.height}
 						muted
 						playsinline
-						preload={i === 0 ? "auto" : "none"}
+						preload="none"
 						aria-label={video.description}
 						data-active={String(i === 0)}
 					></video>
@@ -92,11 +93,11 @@ const reel = MEDIA.filter((m) => m.type === "video");
 				<UiIcon name="google" class="h-7 w-7" />
 				<div class="text-left leading-tight">
 					<p class="text-sm font-bold text-sweetblack">{rating} <span class="text-accent">★★★★★</span></p>
-					<p class="text-xs text-slate-500">{reviews.total} avaliações</p>
+					<p class="text-xs text-slate-600">{reviews.total} avaliações</p>
 				</div>
 			</div>
 			<div class="absolute -right-4 top-10 hidden rounded-2xl bg-white px-4 py-3 text-left shadow-xl sm:block">
-				<p class="text-xs text-slate-500">Aceitamos</p>
+				<p class="text-xs text-slate-600">Aceitamos</p>
 				<p class="text-sm font-bold text-sweetblack">Gympass · Silver</p>
 			</div>
 		</div>
@@ -113,16 +114,21 @@ const reel = MEDIA.filter((m) => m.type === "video");
 		const limit = (v: HTMLVideoElement) => Math.min(v.duration || MAX_SECONDS, MAX_SECONDS);
 		let current = 0;
 
+		const withPoster = (v: HTMLVideoElement) => {
+			if (v.dataset.poster && !v.poster) v.poster = v.dataset.poster;
+			return v;
+		};
+
 		const show = (next: number) => {
 			videos[current].pause();
 			videos[current].dataset.active = "false";
 			bars.forEach((bar, k) => (bar.style.width = k < next ? "100%" : "0%"));
 			current = next;
-			const video = videos[current];
+			const video = withPoster(videos[current]);
 			video.dataset.active = "true";
 			video.currentTime = 0;
 			video.play().catch(() => {});
-			videos[(current + 1) % videos.length].preload = "auto";
+			withPoster(videos[(current + 1) % videos.length]).preload = "auto";
 		};
 		const advance = () => show((current + 1) % videos.length);
 
@@ -135,6 +141,12 @@ const reel = MEDIA.filter((m) => m.type === "video");
 			video.addEventListener("ended", () => k === current && advance());
 		});
 
-		videos[0].play().catch(() => {});
+		const start = () => {
+			videos[0].preload = "auto";
+			videos[0].play().catch(() => {});
+			withPoster(videos[1]);
+		};
+		if (document.readyState === "complete") start();
+		else window.addEventListener("load", start, { once: true });
 	}
 </script>

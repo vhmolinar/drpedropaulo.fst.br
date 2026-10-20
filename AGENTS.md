@@ -30,7 +30,8 @@ Static site built with **Astro** + **Tailwind CSS**, deployed to **Firebase Host
 - `src/config.ts` — Single source for contact info, address, geo, hours and WhatsApp/Instagram URLs
 - `src/data/` — Content data: `reviews.json` (Google testimonials), `faq.ts`, `media.ts` (gallery videos/images), `schema.ts` (JSON-LD graph), `links/*.md`
 - `src/components/` — Astro components (`Nav`, `Header` (hero), `MediaGallery`, `Testimonials`, `Footer`, `Link`, `Icon`, `UiIcon`)
-- `src/layouts/` — Base HTML layout with meta tags, SEO, analytics (incl. `contact_click` gtag events) and JSON-LD slot
+- `src/layouts/` — Base HTML layout with meta tags, SEO, analytics (incl. `contact_click` gtag events) and JSON-LD slot. The gtag script loads only on first interaction or 5s after `load`, to keep it out of the critical path
+- `public/fonts/` — Self-hosted Inter and Fraunces (latin subset, preloaded); don't reintroduce Google Fonts links
 - `public/media/` — Optimized WebP images and H.264 videos (no audio) used by the gallery and hero
 
 ### Links system

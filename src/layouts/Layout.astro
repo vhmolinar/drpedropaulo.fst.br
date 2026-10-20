@@ -11,7 +11,7 @@ export interface Props {
 
 const {
 	title,
-	description = "Fisioterapeuta em Uberlândia-MG. Dr. Pedro Paulo Molinar, formado pela UFU: fisioterapia ortopédica, Pilates clínico e reabilitação funcional no Centro. Particular e Gympass. Agende pelo WhatsApp.",
+	description = "Fisioterapeuta em Uberlândia: fisioterapia ortopédica, Pilates clínico e reabilitação no Centro, com Dr. Pedro Paulo Molinar (UFU). Particular e Gympass.",
 	path = "/",
 	noindex = false,
 	jsonLd,
@@ -58,7 +58,7 @@ const ogImage = `${SITE_URL}/avatar-whatsapp.jpg`;
 		<meta property="og:locale" content="pt_BR" />
 
 		<!-- Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImage} />
@@ -67,12 +67,28 @@ const ogImage = `${SITE_URL}/avatar-whatsapp.jpg`;
 		<meta name="msvalidate.01" content="267107383D9B3EECFB2E656246BCA0E3" />
 
 		<!-- Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 			gtag('config', 'AW-11167286553');
+			(function () {
+				var loaded = false;
+				function load() {
+					if (loaded) return;
+					loaded = true;
+					var s = document.createElement('script');
+					s.async = true;
+					s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-11167286553';
+					document.head.appendChild(s);
+				}
+				['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (type) {
+					window.addEventListener(type, load, { once: true, passive: true });
+				});
+				window.addEventListener('load', function () {
+					setTimeout(load, 5000);
+				});
+			})();
 			document.addEventListener('click', function (e) {
 				var a = e.target.closest && e.target.closest('a[href]');
 				if (!a) return;
@@ -82,9 +98,8 @@ const ogImage = `${SITE_URL}/avatar-whatsapp.jpg`;
 		</script>
 
 		<!-- Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
 
 		<slot name="head" />
 
@@ -96,6 +111,27 @@ const ogImage = `${SITE_URL}/avatar-whatsapp.jpg`;
 </html>
 
 <style is:global>
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 400 800;
+		font-display: swap;
+		src: url('/fonts/inter-latin.woff2') format('woff2');
+	}
+	@font-face {
+		font-family: 'Fraunces';
+		font-style: normal;
+		font-weight: 600;
+		font-display: swap;
+		src: url('/fonts/fraunces-600.woff2') format('woff2');
+	}
+	@font-face {
+		font-family: 'Fraunces';
+		font-style: italic;
+		font-weight: 500;
+		font-display: swap;
+		src: url('/fonts/fraunces-500-italic.woff2') format('woff2');
+	}
 	html {
 		font-family: 'Inter', system-ui, sans-serif;
 		scroll-behavior: smooth;

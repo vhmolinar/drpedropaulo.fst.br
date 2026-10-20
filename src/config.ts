@@ -20,6 +20,7 @@ export const ADDRESS = {
 }
 export const GEO = { lat: -18.918919, lng: -48.2745217 }
 export const MAPS_URL = "https://maps.app.goo.gl/yJpNJEQCrcaJSCfD9"
+export const MAPS_CID_URL = "https://www.google.com/maps?cid=12110137529466207247"
 export const MAPS_EMBED_URL = "https://www.google.com/maps?q=Molinar+Fisioterapia,+Av.+Ces%C3%A1rio+Alvim,+521+-+Centro,+Uberl%C3%A2ndia+-+MG&output=embed"
 
 export const HOURS = [

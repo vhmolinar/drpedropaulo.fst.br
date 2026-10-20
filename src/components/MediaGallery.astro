@@ -32,7 +32,7 @@ import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../config";
 							<video
 								class="h-full w-full object-cover"
 								src={item.src}
-								poster={item.poster}
+								data-lazy-poster={item.poster}
 								width={item.width}
 								height={item.height}
 								muted
@@ -64,6 +64,19 @@ import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../config";
 </section>
 
 <script>
+	const posterObserver = new IntersectionObserver(
+		(entries) => {
+			entries.forEach(({ target, isIntersecting }) => {
+				if (!isIntersecting) return;
+				const video = target as HTMLVideoElement;
+				video.poster = video.dataset.lazyPoster!;
+				posterObserver.unobserve(video);
+			});
+		},
+		{ rootMargin: "600px" }
+	);
+	document.querySelectorAll<HTMLVideoElement>("video[data-lazy-poster]").forEach((v) => posterObserver.observe(v));
+
 	const videos = document.querySelectorAll<HTMLVideoElement>("video[data-autoplay]");
 	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

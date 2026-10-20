@@ -1,10 +1,10 @@
-import { ADDRESS, BUSINESS_NAME, GEO, INSTAGRAM_URL, MAPS_URL, PHONE_E164, SITE_URL, TITLE } from "../config";
+import { ADDRESS, BUSINESS_NAME, GEO, INSTAGRAM_URL, MAPS_CID_URL, PHONE_E164, SITE_URL, TITLE } from "../config";
 import { FAQ } from "./faq";
 import { MEDIA } from "./media";
 
 const businessId = `${SITE_URL}/#business`;
 const personId = `${SITE_URL}/#person`;
-const sameAs = [INSTAGRAM_URL, MAPS_URL];
+const sameAs = [INSTAGRAM_URL, MAPS_CID_URL];
 
 export const homeSchema = {
 	"@context": "https://schema.org",
@@ -39,7 +39,7 @@ export const homeSchema = {
 				addressCountry: ADDRESS.country,
 			},
 			geo: { "@type": "GeoCoordinates", latitude: GEO.lat, longitude: GEO.lng },
-			hasMap: MAPS_URL,
+			hasMap: MAPS_CID_URL,
 			areaServed: { "@type": "City", name: "Uberlândia" },
 			openingHoursSpecification: [
 				{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "11:00" },
