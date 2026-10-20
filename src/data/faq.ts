@@ -1,7 +1,11 @@
 export const FAQ = [
 	{
 		question: "Vocês atendem pelo Gympass (Wellhub)?",
-		answer: "Sim. O estúdio aceita Gympass/Wellhub a partir do plano Silver, com o mesmo cuidado e acompanhamento dos alunos particulares.",
+		answer: "Sim, para o Pilates: o estúdio aceita Gympass/Wellhub a partir do plano Silver, com o mesmo acompanhamento dos alunos particulares. Fisioterapia e massoterapia são atendidas somente no particular.",
+	},
+	{
+		question: "Tem aula experimental de Pilates?",
+		answer: "Sim, a aula experimental é gratuita. Cada aula dura 55 minutos e termina com 10 minutos de massagem.",
 	},
 	{
 		question: "Qual é a diferença entre Pilates clínico e Pilates comum?",

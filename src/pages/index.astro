@@ -11,7 +11,8 @@ import FinalCta from "../components/FinalCta.astro";
 import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
 import UiIcon from "../components/UiIcon.astro";
 
-import { ADDRESS, HOURS, MAPS_EMBED_URL, MAPS_URL, TAGLINE, WHATSAPP_URL } from "../config";
+import { ADDRESS, CREFITO, HOURS, MAPS_EMBED_URL, MAPS_URL, TAGLINE, WHATSAPP_URL } from "../config";
+import { EDUCATION } from "../data/education";
 import { FAQ } from "../data/faq";
 import { homeSchema } from "../data/schema";
 import { SERVICES } from "../data/services";
@@ -20,7 +21,7 @@ const links = await Astro.glob("../data/links/*.md");
 
 const trust = [
 	{ icon: "academic", label: "Formado pela UFU" },
-	{ icon: "check", label: "Atendimento particular" },
+	{ icon: "check", label: "Aula experimental grátis" },
 	{ icon: "check", label: "Gympass – plano Silver" },
 	{ icon: "pin", label: "Centro de Uberlândia" },
 ] as const;
@@ -120,15 +121,29 @@ const steps = [
 				<div>
 					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Sobre</p>
 					<h2 id="sobre-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Dr. Pedro Paulo Molinar</h2>
-					<p class="mt-2 font-medium text-primary">Fisioterapeuta formado pela Universidade Federal de Uberlândia (UFU)</p>
+					<p class="mt-2 font-medium text-primary">Fisioterapeuta formado pela Universidade Federal de Uberlândia (UFU) · {CREFITO}</p>
 					<div class="mt-6 space-y-4 leading-relaxed text-slate-600">
 						<p>
 							Meu trabalho une fisioterapia e Pilates clínico para tratar a causa das dores — e não apenas os sintomas. Cada paciente passa por uma avaliação individual e recebe um plano pensado para o seu corpo, sua rotina e seus objetivos.
 						</p>
 						<p>
-							No estúdio, no Centro de Uberlândia, atendo desde quem está se recuperando de uma lesão ou cirurgia até quem busca mais força, mobilidade e qualidade de vida — de jovens atletas a pessoas da terceira idade. Também ofereço massoterapia, em sessões avulsas ou para relaxar depois do treino.
+							Atendo desde 2021 e, desde 2023, no estúdio da Av. Cesário Alvim, no Centro de Uberlândia. Recebo desde quem está se recuperando de uma lesão ou cirurgia até quem busca mais força, mobilidade e qualidade de vida — de jovens atletas a gestantes e pessoas da terceira idade. Também ofereço massoterapia, e toda aula de Pilates termina com 10 minutos de massagem.
 						</p>
 					</div>
+					<details class="group mt-6 rounded-2xl bg-white p-5 ring-1 ring-slate-200/70">
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 font-semibold text-sweetblack">
+							Formação complementar ({EDUCATION.length} cursos)
+							<UiIcon name="chevronDown" class="h-5 w-5 flex-none text-primary transition group-open:rotate-180" />
+						</summary>
+						<ul class="mt-4 space-y-2.5 text-sm text-slate-600">
+							{EDUCATION.map((c) => (
+								<li class="flex gap-2.5">
+									<UiIcon name="academic" class="mt-0.5 h-4 w-4 flex-none text-primary" />
+									<span>{c.name}{c.school && <span class="text-slate-500"> — {c.school}</span>}</span>
+								</li>
+							))}
+						</ul>
+					</details>
 					<a
 						href={WHATSAPP_URL}
 						target="_blank"

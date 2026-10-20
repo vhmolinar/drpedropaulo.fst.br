@@ -1,7 +1,7 @@
 ---
 import UiIcon from "./UiIcon.astro";
 import { SERVICES } from "../data/services";
-import { ADDRESS, BUSINESS_NAME, HOURS, INSTAGRAM_URL, MAPS_URL, PHONE, TITLE, WHATSAPP_URL } from "../config";
+import { ADDRESS, BUSINESS_NAME, CREFITO, HOURS, INSTAGRAM_URL, MAPS_URL, PHONE, TITLE, WHATSAPP_URL } from "../config";
 
 export interface Props {
 	tagline: string;
@@ -16,7 +16,10 @@ const year = new Date().getFullYear();
 		<div>
 			<div class="mb-3 flex items-center gap-3">
 				<img src="/fisioterapia.png" class="h-9 w-9 opacity-80" alt="" width="36" height="36" loading="lazy" />
-				<p class="font-semibold text-white">{TITLE}</p>
+				<div>
+					<p class="font-semibold text-white">{TITLE}</p>
+					<p class="text-xs">Fisioterapeuta · {CREFITO}</p>
+				</div>
 			</div>
 			<p class="text-sm">{tagline}</p>
 			<div class="mt-5 flex gap-3">
@@ -50,7 +53,7 @@ const year = new Date().getFullYear();
 		<div class="text-sm">
 			<p class="mb-2 font-semibold text-white">Horários</p>
 			{HOURS.map((h) => <p>{h.label}: {h.time}</p>)}
-			<p class="mt-2">Particular e Gympass (plano Silver)</p>
+			<p class="mt-2">Atendimento particular · Gympass (plano Silver) no Pilates</p>
 		</div>
 	</div>
 	<div class="border-t border-white/5">
