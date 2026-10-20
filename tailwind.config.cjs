@@ -4,17 +4,31 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: "#0f766e",
-				"primary-dark": "#134e4a",
-				"primary-light": "#ccfbf1",
+				primary: "#1f6b4a",
+				"primary-dark": "#0f3f2e",
+				"primary-light": "#dcefe3",
+				hero: {
+					bg: "#ecf4ee",
+					fg: "#0f3f2e",
+					muted: "#475550",
+					accent: "#1f6b4a",
+					glow: "#a7d6b7",
+				},
+				cta: {
+					DEFAULT: "#16a34a",
+					fg: "#ffffff",
+					icon: "#ffffff",
+					hover: "#15803d",
+				},
 				sweetblack: "#0f172a",
 				accent: "#f59e0b",
+				sand: "#faf7f2",
+				whatsapp: "#16a34a",
+				"whatsapp-dark": "#15803d",
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-			},
-			backgroundImage: {
-				'hero-gradient': 'linear-gradient(135deg, #0c4a3a 0%, #0f766e 50%, #0d9488 100%)',
+				display: ['Fraunces', 'Georgia', 'serif'],
 			},
 		},
 	},

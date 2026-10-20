@@ -1,64 +1,24 @@
 ---
+import { SITE_URL, TITLE, GEO } from "../config";
+
 export interface Props {
 	title: string;
 	description?: string;
+	path?: string;
+	noindex?: boolean;
+	jsonLd?: object;
 }
 
 const {
 	title,
-	description = "Fisioterapeuta em Uberlândia-MG. Dr. Pedro Paulo Molinar, formado pela UFU, especialista em reabilitação funcional, Pilates clínico e fisioterapia ortopédica. Agende pelo WhatsApp.",
+	description = "Fisioterapeuta em Uberlândia-MG. Dr. Pedro Paulo Molinar, formado pela UFU: fisioterapia ortopédica, Pilates clínico e reabilitação funcional no Centro. Particular e Gympass. Agende pelo WhatsApp.",
+	path = "/",
+	noindex = false,
+	jsonLd,
 } = Astro.props;
 
-const schema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@graph": [
-		{
-			"@type": "LocalBusiness",
-			"@id": "https://drpedropaulo.fst.br/#business",
-			"name": "Dr. Pedro Paulo Molinar – Fisioterapia e Pilates",
-			"description": "Fisioterapia, reabilitação funcional e estúdio de Pilates em Uberlândia-MG. Atendimento particular e Gympass.",
-			"url": "https://drpedropaulo.fst.br",
-			"telephone": "+55-34-98414-3510",
-			"image": "https://drpedropaulo.fst.br/avatar-whatsapp.jpg",
-			"priceRange": "$$",
-			"address": {
-				"@type": "PostalAddress",
-				"streetAddress": "Avenida Cesário Alvim, 521",
-				"addressLocality": "Uberlândia",
-				"addressRegion": "MG",
-				"addressCountry": "BR"
-			},
-			"openingHoursSpecification": [
-				{
-					"@type": "OpeningHoursSpecification",
-					"dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-					"opens": "07:00",
-					"closes": "11:00"
-				},
-				{
-					"@type": "OpeningHoursSpecification",
-					"dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-					"opens": "16:00",
-					"closes": "20:00"
-				}
-			],
-			"sameAs": ["https://www.instagram.com/drpedrofisio95/"]
-		},
-		{
-			"@type": "Person",
-			"@id": "https://drpedropaulo.fst.br/#person",
-			"name": "Pedro Paulo Molinar",
-			"jobTitle": "Fisioterapeuta",
-			"alumniOf": {
-				"@type": "CollegeOrUniversity",
-				"name": "Universidade Federal de Uberlândia"
-			},
-			"url": "https://drpedropaulo.fst.br",
-			"image": "https://drpedropaulo.fst.br/avatar-whatsapp.jpg",
-			"sameAs": ["https://www.instagram.com/drpedrofisio95/"]
-		}
-	]
-});
+const canonical = `${SITE_URL}${path}`;
+const ogImage = `${SITE_URL}/avatar-whatsapp.jpg`;
 ---
 
 <!DOCTYPE html>
@@ -66,30 +26,42 @@ const schema = JSON.stringify({
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#ecf4ee" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/avatar-whatsapp.jpg" />
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Primary SEO -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="keywords" content="fisioterapeuta uberlândia, fisioterapia uberlândia, pilates uberlândia, reabilitação funcional uberlândia, pedro paulo molinar, fisioterapia mg, pilates clínico, fisioterapia ortopédica" />
-		<meta name="robots" content="index, follow" />
-		<link rel="canonical" href="https://drpedropaulo.fst.br" />
+		<meta name="keywords" content="fisioterapeuta uberlândia, fisioterapia uberlândia, pilates uberlândia, pilates clínico uberlândia, reabilitação funcional uberlândia, fisioterapia ortopédica, pilates gympass uberlândia, pedro paulo molinar, molinar fisioterapia" />
+		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
+		<meta name="author" content={TITLE} />
+		<link rel="canonical" href={canonical} />
+
+		<!-- Local SEO -->
+		<meta name="geo.region" content="BR-MG" />
+		<meta name="geo.placename" content="Uberlândia" />
+		<meta name="geo.position" content={`${GEO.lat};${GEO.lng}`} />
+		<meta name="ICBM" content={`${GEO.lat}, ${GEO.lng}`} />
 
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://drpedropaulo.fst.br" />
-		<meta property="og:site_name" content="Dr. Pedro Paulo Molinar" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:site_name" content={TITLE} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="640" />
+		<meta property="og:image:height" content="640" />
+		<meta property="og:image:alt" content="Dr. Pedro Paulo Molinar, fisioterapeuta em Uberlândia" />
 		<meta property="og:locale" content="pt_BR" />
 
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="https://drpedropaulo.fst.br/avatar-whatsapp.jpg" />
+		<meta name="twitter:image" content={ogImage} />
 
 		<!-- Bing Verification -->
 		<meta name="msvalidate.01" content="267107383D9B3EECFB2E656246BCA0E3" />
@@ -101,33 +73,51 @@ const schema = JSON.stringify({
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
 			gtag('config', 'AW-11167286553');
+			document.addEventListener('click', function (e) {
+				var a = e.target.closest && e.target.closest('a[href]');
+				if (!a) return;
+				var channel = a.href.indexOf('wa.me') > -1 ? 'whatsapp' : a.href.indexOf('instagram.com') > -1 ? 'instagram' : a.href.indexOf('maps') > -1 ? 'maps' : null;
+				if (channel) gtag('event', 'contact_click', { channel: channel, placement: a.dataset.placement || 'unknown' });
+			});
 		</script>
 
-		<!-- Inter Font -->
+		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-		<!-- JSON-LD Structured Data -->
-		<script type="application/ld+json" set:html={schema} />
+		<slot name="head" />
+
+		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 	</head>
-	<body>
+	<body class="bg-sand text-slate-800 antialiased">
 		<slot />
 	</body>
 </html>
 
 <style is:global>
-	*, *::before, *::after {
-		box-sizing: border-box;
-	}
 	html {
 		font-family: 'Inter', system-ui, sans-serif;
-		background-color: #f8fafc;
 		scroll-behavior: smooth;
+		scroll-padding-top: 5rem;
 		-webkit-font-smoothing: antialiased;
 	}
 	body {
 		margin: 0;
-		padding: 0;
+	}
+	.no-scrollbar {
+		scrollbar-width: none;
+	}
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+		*, *::before, *::after {
+			transition-duration: 0.01ms !important;
+			animation-duration: 0.01ms !important;
+		}
 	}
 </style>

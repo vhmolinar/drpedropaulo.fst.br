@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import UiIcon from "../components/UiIcon.astro";
+import { WHATSAPP_URL } from "../config";
+---
+
+<Layout title="Página não encontrada | Dr. Pedro Paulo Molinar" path="/404" noindex>
+	<main class="flex min-h-screen flex-col items-center justify-center bg-primary-dark px-4 text-center text-white">
+		<p class="font-display text-7xl font-semibold text-primary-light">404</p>
+		<h1 class="mt-4 text-2xl font-bold">Página não encontrada</h1>
+		<p class="mt-2 text-white/75">O endereço que você acessou não existe ou foi movido.</p>
+		<div class="mt-8 flex flex-col gap-3 sm:flex-row">
+			<a href="/" class="rounded-full px-7 py-3 font-semibold ring-2 ring-white/40 transition hover:bg-white/10">Voltar ao início</a>
+			<a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-placement="404" class="inline-flex items-center justify-center gap-2 rounded-full bg-whatsapp px-7 py-3 font-semibold transition hover:bg-whatsapp-dark">
+				<UiIcon name="whatsapp" class="h-5 w-5" />
+				Falar no WhatsApp
+			</a>
+		</div>
+	</main>
+</Layout>

@@ -25,3 +25,6 @@ pnpm-debug.log*
 # agentic
 .agents
 .claude
+
+# firebase deploy cache
+.firebase/
