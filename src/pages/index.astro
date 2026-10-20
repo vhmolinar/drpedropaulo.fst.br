@@ -1,65 +1,299 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
 import Header from "../components/Header.astro";
+import MediaGallery from "../components/MediaGallery.astro";
+import Testimonials from "../components/Testimonials.astro";
 import Link from "../components/Link.astro";
 import Footer from "../components/Footer.astro";
+import UiIcon from "../components/UiIcon.astro";
 
-import { 
-    SUBTITLE, 
-    TITLE, 
-    TAGLINE,
-} from "../config";
+import { ADDRESS, HOURS, MAPS_EMBED_URL, MAPS_URL, TAGLINE, WHATSAPP_URL } from "../config";
+import { FAQ } from "../data/faq";
+import { homeSchema } from "../data/schema";
 
-// fetch all Markdown files in the links directory
-const links = await Astro.glob("./links/*.md");
+const links = await Astro.glob("../data/links/*.md");
+
+const trust = [
+	{ icon: "academic", label: "Formado pela UFU" },
+	{ icon: "check", label: "Atendimento particular" },
+	{ icon: "check", label: "Gympass – plano Silver" },
+	{ icon: "pin", label: "Centro de Uberlândia" },
+] as const;
+
+const services = [
+	{
+		icon: "spine",
+		title: "Fisioterapia ortopédica",
+		text: "Avaliação e tratamento de lesões musculoesqueléticas, dores na coluna e nas articulações e recuperação pós-cirúrgica.",
+	},
+	{
+		icon: "person",
+		title: "Pilates clínico",
+		text: "Pilates conduzido por fisioterapeuta para fortalecer o core, melhorar a postura, a flexibilidade e o equilíbrio.",
+	},
+	{
+		icon: "refresh",
+		title: "Reabilitação funcional",
+		text: "Protocolos individualizados para voltar às atividades do dia a dia e à prática esportiva com segurança.",
+	},
+] as const;
+
+const conditions = [
+	"Dor lombar e cervical",
+	"Hérnia de disco",
+	"Pós-operatório ortopédico",
+	"Lesões esportivas",
+	"Postura e mobilidade",
+	"Equilíbrio na terceira idade",
+	"Condicionamento físico",
+];
+
+const steps = [
+	{ icon: "chat", title: "Chame no WhatsApp", text: "Conte o que você sente e escolha o melhor horário." },
+	{ icon: "clipboard", title: "Avaliação individual", text: "Histórico, postura e movimento analisados com calma." },
+	{ icon: "trend", title: "Plano sob medida", text: "Exercícios ajustados à sua evolução, aula a aula." },
+] as const;
 ---
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11167286553"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'AW-11167286553');
-</script>
+<Layout title="Fisioterapia e Pilates em Uberlândia | Dr. Pedro Paulo Molinar" jsonLd={homeSchema}>
+	<link slot="head" rel="preload" as="image" href="/media/pilates-cadillac.webp" type="image/webp" />
 
-<Layout title={TITLE}>
-	
-    <Header subtitle={SUBTITLE} title={TITLE} tagline={TAGLINE} />
+	<Nav />
+	<Header />
 
-    <section>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mx-auto max-w-3xl">
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {
-                        links.map((link) => (
-                            <Link
-                                icon={link.frontmatter.icon}
-                                title={link.frontmatter.title}
-                                href={link.frontmatter.href}
-                            />
-                        ))
-                    }
-                </div>
-                <div class="mx-auto mt-12 lg:flex lg:gap-8">
-                    <img src="estudio.jpg" class="lg:w-1/2 rounded-xl"
-                        alt="Estúdio de Pilates e fisioterapia em Uberlândia"/>
-                    <div class="mt-4 lg:mt-0">
-                        <p class="font-bold text-primary">Onde estamos:</p>
-                        <p class="mb-4 text-sweetblack">Avenida Cesário Alvim, 521</p>
-                        <p class="font-bold text-primary">Horário de atendimento:</p>
-                        <p class="mb-4 text-sweetblack">07:00 às 11:00 e 16:00 às 20:00</p>
-                        <p class="font-bold text-primary">Modalidades:</p>
-                        <p class="text-sweetblack">Atendimentos particulares ou Gympass (Plano Silver)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+	<main>
+		<!-- Trust strip -->
+		<section class="border-b border-slate-200 bg-white" aria-label="Diferenciais">
+			<ul class="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-4 py-6 sm:px-6 md:flex md:justify-between lg:px-8">
+				{trust.map((item) => (
+					<li class="flex items-center gap-2 text-sm font-medium text-slate-700">
+						<UiIcon name={item.icon} class="h-5 w-5 flex-none text-primary" />
+						{item.label}
+					</li>
+				))}
+			</ul>
+		</section>
 
-	<Footer
-		title={TITLE}
-		tagline={TAGLINE}
-	/>
+		<!-- Services -->
+		<section id="servicos" class="py-20 lg:py-28" aria-labelledby="servicos-titulo">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+				<div class="mx-auto mb-12 max-w-2xl text-center">
+					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Tratamentos</p>
+					<h2 id="servicos-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Como posso te ajudar</h2>
+					<p class="mt-3 text-slate-600">Cada tratamento começa por uma avaliação e é pensado para o seu corpo, sua rotina e seus objetivos.</p>
+				</div>
 
+				<div class="grid gap-6 md:grid-cols-3">
+					{services.map((s) => (
+						<article class="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200/70 transition hover:-translate-y-1 hover:shadow-lg">
+							<div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-light text-primary">
+								<UiIcon name={s.icon} class="h-6 w-6" />
+							</div>
+							<h3 class="mb-2 text-lg font-bold text-sweetblack">{s.title}</h3>
+							<p class="text-sm leading-relaxed text-slate-600">{s.text}</p>
+						</article>
+					))}
+				</div>
+
+				<div class="mt-12 text-center">
+					<h3 class="mb-4 text-sm font-semibold text-slate-600">Indicado para</h3>
+					<ul class="flex flex-wrap justify-center gap-2.5">
+						{conditions.map((c) => (
+							<li class="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-200">{c}</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<MediaGallery />
+
+		<!-- About -->
+		<section id="sobre" class="overflow-hidden py-20 lg:py-28" aria-labelledby="sobre-titulo">
+			<div class="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 md:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8">
+				<div class="relative mx-auto w-full max-w-sm">
+					<div class="absolute -inset-3 -rotate-3 rounded-[2rem] bg-primary-light" aria-hidden="true"></div>
+					<img
+						src="/media/pedro-paulo-molinar-fisioterapeuta.webp"
+						alt="Dr. Pedro Paulo Molinar, fisioterapeuta formado pela UFU"
+						width="480"
+						height="480"
+						loading="lazy"
+						decoding="async"
+						class="relative aspect-square w-full rounded-[2rem] object-cover shadow-xl"
+					/>
+				</div>
+				<div>
+					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Sobre</p>
+					<h2 id="sobre-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Dr. Pedro Paulo Molinar</h2>
+					<p class="mt-2 font-medium text-primary">Fisioterapeuta formado pela Universidade Federal de Uberlândia (UFU)</p>
+					<div class="mt-6 space-y-4 leading-relaxed text-slate-600">
+						<p>
+							Meu trabalho une fisioterapia e Pilates clínico para tratar a causa das dores — e não apenas os sintomas. Cada paciente passa por uma avaliação individual e recebe um plano pensado para o seu corpo, sua rotina e seus objetivos.
+						</p>
+						<p>
+							No estúdio, no Centro de Uberlândia, atendo desde quem está se recuperando de uma lesão ou cirurgia até quem busca mais força, mobilidade e qualidade de vida — de jovens atletas a pessoas da terceira idade.
+						</p>
+					</div>
+					<a
+						href={WHATSAPP_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-placement="about"
+						class="mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-7 py-3.5 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-primary-dark"
+					>
+						<UiIcon name="whatsapp" class="h-5 w-5" />
+						Converse comigo
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<Testimonials />
+
+		<!-- How it works -->
+		<section class="py-20 lg:py-24" aria-labelledby="como-funciona-titulo">
+			<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+				<div class="mx-auto mb-12 max-w-2xl text-center">
+					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Primeiros passos</p>
+					<h2 id="como-funciona-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Como começar</h2>
+				</div>
+				<ol class="grid gap-6 md:grid-cols-3">
+					{steps.map((step, i) => (
+						<li class="relative rounded-3xl bg-white p-8 ring-1 ring-slate-200/70">
+							<span class="absolute right-6 top-5 font-display text-5xl font-semibold text-primary-light">{i + 1}</span>
+							<UiIcon name={step.icon} class="mb-4 h-8 w-8 text-primary" />
+							<h3 class="mb-1 text-lg font-bold text-sweetblack">{step.title}</h3>
+							<p class="text-sm text-slate-600">{step.text}</p>
+						</li>
+					))}
+				</ol>
+			</div>
+		</section>
+
+		<!-- Location -->
+		<section id="contato" class="bg-white py-20 lg:py-28" aria-labelledby="contato-titulo">
+			<div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+				<div>
+					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Contato</p>
+					<h2 id="contato-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Localização e horários</h2>
+
+					<dl class="mt-8 space-y-6">
+						<div class="flex gap-4">
+							<dt class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-primary-light text-primary">
+								<UiIcon name="pin" />
+								<span class="sr-only">Endereço</span>
+							</dt>
+							<dd class="text-slate-600">
+								<p class="font-semibold text-sweetblack">{ADDRESS.street} – {ADDRESS.district}</p>
+								<p>{ADDRESS.city} – {ADDRESS.region}, {ADDRESS.postalCode}</p>
+							</dd>
+						</div>
+						<div class="flex gap-4">
+							<dt class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-primary-light text-primary">
+								<UiIcon name="clock" />
+								<span class="sr-only">Horário de atendimento</span>
+							</dt>
+							<dd class="text-slate-600">
+								{HOURS.map((h) => <p><span class="font-semibold text-sweetblack">{h.label}:</span> {h.time}</p>)}
+							</dd>
+						</div>
+						<div class="flex gap-4">
+							<dt class="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-primary-light text-primary">
+								<UiIcon name="card" />
+								<span class="sr-only">Formas de atendimento</span>
+							</dt>
+							<dd class="text-slate-600">
+								<p class="font-semibold text-sweetblack">Atendimento particular</p>
+								<p>Gympass / Wellhub – plano Silver</p>
+							</dd>
+						</div>
+					</dl>
+
+					<div class="mt-10 flex flex-col gap-4">
+						{links.map((link) => (
+							<Link icon={link.frontmatter.icon} title={link.frontmatter.title} href={link.frontmatter.href} />
+						))}
+					</div>
+				</div>
+
+				<div class="flex flex-col gap-4">
+					<div class="relative min-h-[360px] flex-1 overflow-hidden rounded-3xl bg-slate-100 ring-1 ring-slate-200">
+						<iframe
+							src={MAPS_EMBED_URL}
+							title="Mapa: Molinar Fisioterapia, Av. Cesário Alvim, 521, Uberlândia"
+							class="absolute inset-0 h-full w-full border-0"
+							loading="lazy"
+							referrerpolicy="no-referrer-when-downgrade"
+							allowfullscreen
+						></iframe>
+					</div>
+					<a
+						href={MAPS_URL}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-placement="contact"
+						class="inline-flex items-center justify-center gap-2 rounded-full bg-primary-light px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
+					>
+						<UiIcon name="map" class="h-4 w-4" />
+						Como chegar
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- FAQ -->
+		<section class="py-20 lg:py-28" aria-labelledby="faq-titulo">
+			<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+				<div class="mb-10 text-center">
+					<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Dúvidas</p>
+					<h2 id="faq-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Perguntas frequentes</h2>
+				</div>
+				<div class="space-y-3">
+					{FAQ.map((item) => (
+						<details class="group rounded-2xl bg-white ring-1 ring-slate-200/70 open:shadow-sm">
+							<summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-semibold text-sweetblack [&::-webkit-details-marker]:hidden">
+								<h3>{item.question}</h3>
+								<UiIcon name="chevronDown" class="h-5 w-5 flex-none text-primary transition group-open:rotate-180" />
+							</summary>
+							<p class="px-6 pb-6 leading-relaxed text-slate-600">{item.answer}</p>
+						</details>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="relative overflow-hidden bg-hero-bg py-20 lg:py-24">
+			<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#a7d6b7_0%,_transparent_60%)] opacity-40" aria-hidden="true"></div>
+			<div class="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+				<h2 class="font-display text-3xl font-semibold text-hero-fg lg:text-5xl">Pronto para se mover sem dor?</h2>
+				<p class="mx-auto mt-4 max-w-xl text-lg text-hero-muted">Agende sua avaliação fisioterapêutica e receba um plano feito para você.</p>
+				<a
+					href={WHATSAPP_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					data-placement="final-cta"
+					class="mt-10 inline-flex items-center gap-3 rounded-full bg-cta px-10 py-4 text-lg font-bold text-cta-fg shadow-xl transition hover:-translate-y-1 hover:bg-cta-hover"
+				>
+					<UiIcon name="whatsapp" class="h-6 w-6 text-cta-icon" />
+					Agendar pelo WhatsApp
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<Footer tagline={TAGLINE} />
+
+	<a
+		href={WHATSAPP_URL}
+		target="_blank"
+		rel="noopener noreferrer"
+		data-placement="floating"
+		class="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-xl shadow-black/25 transition hover:scale-105 hover:bg-whatsapp-dark"
+		aria-label="Agendar pelo WhatsApp"
+	>
+		<UiIcon name="whatsapp" class="h-7 w-7" />
+	</a>
 </Layout>

@@ -1,21 +1,51 @@
 ---
+import UiIcon from "./UiIcon.astro";
+import { ADDRESS, BUSINESS_NAME, HOURS, INSTAGRAM_URL, MAPS_URL, PHONE, TITLE, WHATSAPP_URL } from "../config";
+
 export interface Props {
-	title: string;
 	tagline: string;
 }
 
-const { title, tagline } = Astro.props;
+const { tagline } = Astro.props;
+const year = new Date().getFullYear();
 ---
-<footer>
-    <div class="mx-auto max-w-7xl lg:mt-8 pb-12 px-4 sm:px-6 md:flex md:items-center md:justify-center lg:px-8">
-        <div class="mt-8 md:order-1 md:mt-0">
-            <p class="text-center text-base text-sweetblack">
-                &copy; 2023 {title}. {tagline}
-            </p>
-            <!-- <p class="text-center text-base text-gray-400">
-                Make with <a href="https://github.com/yoanbernabeu/LinkTreeFreeClone" class="text-indigo-600">LinkTreeFreeClone</a>
-            </p> -->
-            <img src="fisioterapia.png" class="mx-auto w-12" />
-        </div>
-    </div>
+
+<footer class="bg-sweetblack text-slate-400">
+	<div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
+		<div>
+			<div class="mb-3 flex items-center gap-3">
+				<img src="/fisioterapia.png" class="h-9 w-9 opacity-80" alt="" width="36" height="36" loading="lazy" />
+				<p class="font-semibold text-white">{TITLE}</p>
+			</div>
+			<p class="text-sm">{tagline}</p>
+			<div class="mt-5 flex gap-3">
+				<a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-placement="footer" class="rounded-full bg-white/5 p-2.5 transition hover:bg-white/10 hover:text-white" aria-label="WhatsApp">
+					<UiIcon name="whatsapp" class="h-5 w-5" />
+				</a>
+				<a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" data-placement="footer" class="rounded-full bg-white/5 p-2.5 transition hover:bg-white/10 hover:text-white" aria-label="Instagram">
+					<UiIcon name="instagram" class="h-5 w-5" />
+				</a>
+			</div>
+		</div>
+
+		<address class="text-sm not-italic leading-relaxed">
+			<p class="mb-2 font-semibold text-white">{BUSINESS_NAME}</p>
+			<a href={MAPS_URL} target="_blank" rel="noopener noreferrer" data-placement="footer" class="hover:text-white">
+				{ADDRESS.street} – {ADDRESS.district}<br />
+				{ADDRESS.city} – {ADDRESS.region}, {ADDRESS.postalCode}
+			</a>
+			<p class="mt-2"><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-placement="footer" class="hover:text-white">{PHONE}</a></p>
+		</address>
+
+		<div class="text-sm">
+			<p class="mb-2 font-semibold text-white">Horários</p>
+			{HOURS.map((h) => <p>{h.label}: {h.time}</p>)}
+			<p class="mt-2">Particular e Gympass (plano Silver)</p>
+		</div>
+	</div>
+	<div class="border-t border-white/5">
+		<p class="mx-auto max-w-6xl px-4 py-6 text-center text-xs text-slate-400 sm:px-6 lg:px-8">
+			&copy; {year} {TITLE}. Todos os direitos reservados.
+		</p>
+	</div>
 </footer>

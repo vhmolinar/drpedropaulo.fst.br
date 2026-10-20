@@ -1,0 +1,102 @@
+---
+import UiIcon from "./UiIcon.astro";
+import { MEDIA } from "../data/media";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "../config";
+---
+
+<section id="estudio" class="bg-sweetblack py-20 text-white lg:py-28" aria-labelledby="estudio-titulo">
+	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-10 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:items-end md:text-left">
+			<div class="max-w-xl">
+				<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary-light">Na prática</p>
+				<h2 id="estudio-titulo" class="font-display text-3xl font-semibold lg:text-4xl">Um estúdio completo no Centro de Uberlândia</h2>
+				<p class="mt-3 text-slate-300">Reformer, Cadillac, Ladder Barrel e Chair: aparelhos que permitem adaptar cada exercício ao seu corpo e ao seu momento.</p>
+			</div>
+			<a
+				href={INSTAGRAM_URL}
+				target="_blank"
+				rel="noopener noreferrer"
+				data-placement="gallery"
+				class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 via-pink-600 to-orange-500 px-5 py-2.5 text-sm font-semibold shadow-lg transition hover:-translate-y-0.5"
+			>
+				<UiIcon name="instagram" class="h-4 w-4" />
+				@{INSTAGRAM_HANDLE}
+			</a>
+		</div>
+
+		<ul class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0">
+			{MEDIA.map((item) => (
+				<li class="w-[62%] flex-none snap-center sm:w-[40%] lg:w-auto">
+					<figure class="group relative aspect-[9/16] overflow-hidden rounded-3xl bg-slate-800">
+						{item.type === "video" ? (
+							<video
+								class="h-full w-full object-cover"
+								src={item.src}
+								data-lazy-poster={item.poster}
+								width={item.width}
+								height={item.height}
+								muted
+								loop
+								playsinline
+								preload="none"
+								aria-label={item.description}
+								data-autoplay
+							></video>
+						) : (
+							<img
+								class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+								src={item.src}
+								alt={item.description}
+								width={item.width}
+								height={item.height}
+								loading="lazy"
+								decoding="async"
+							/>
+						)}
+						<figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-12 text-sm font-semibold">
+							{item.title}
+						</figcaption>
+					</figure>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<script>
+	const posterObserver = new IntersectionObserver(
+		(entries) => {
+			entries.forEach(({ target, isIntersecting }) => {
+				if (!isIntersecting) return;
+				const video = target as HTMLVideoElement;
+				video.poster = video.dataset.lazyPoster!;
+				posterObserver.unobserve(video);
+			});
+		},
+		{ rootMargin: "600px" }
+	);
+	document.querySelectorAll<HTMLVideoElement>("video[data-lazy-poster]").forEach((v) => posterObserver.observe(v));
+
+	const videos = document.querySelectorAll<HTMLVideoElement>("video[data-autoplay]");
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (reduceMotion) {
+		videos.forEach((v) => {
+			v.removeAttribute("autoplay");
+			v.pause();
+			v.controls = true;
+		});
+	} else {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach(({ target, isIntersecting }) => {
+					const video = target as HTMLVideoElement;
+					if (isIntersecting) video.play().catch(() => (video.controls = true));
+					else video.pause();
+				});
+			},
+			{ threshold: 0.4 }
+		);
+		videos.forEach((v) => observer.observe(v));
+	}
+</script>

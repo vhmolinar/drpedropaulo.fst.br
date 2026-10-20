@@ -1,0 +1,77 @@
+---
+import UiIcon from "./UiIcon.astro";
+import { TITLE, WHATSAPP_URL } from "../config";
+
+const items = [
+	{ href: "#servicos", label: "Tratamentos" },
+	{ href: "#estudio", label: "Estúdio" },
+	{ href: "#sobre", label: "Sobre" },
+	{ href: "#depoimentos", label: "Depoimentos" },
+	{ href: "#contato", label: "Contato" },
+];
+---
+
+<nav id="site-nav" class="fixed inset-x-0 top-0 z-40 transition-colors duration-300 data-[scrolled=true]:bg-white/90 data-[scrolled=true]:shadow-sm data-[scrolled=true]:backdrop-blur" aria-label="Principal">
+	<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+		<a href="#topo" class="flex items-center gap-2.5 font-semibold text-hero-fg transition-colors [[data-scrolled=true]_&]:text-sweetblack">
+			<img src="/media/pedro-paulo-molinar-avatar-72.webp" alt="" width="36" height="36" class="h-9 w-9 rounded-full object-cover ring-2 ring-hero-fg/40" />
+			<span class="text-sm sm:text-base">{TITLE}</span>
+		</a>
+
+		<ul class="hidden items-center gap-7 text-sm font-medium lg:flex">
+			{items.map((item) => (
+				<li>
+					<a href={item.href} class="text-hero-fg/80 transition-colors hover:text-hero-fg [[data-scrolled=true]_&]:text-slate-600 [[data-scrolled=true]_&]:hover:text-primary">{item.label}</a>
+				</li>
+			))}
+		</ul>
+
+		<div class="flex items-center gap-2">
+			<a
+				href={WHATSAPP_URL}
+				target="_blank"
+				rel="noopener noreferrer"
+				data-placement="nav"
+				class="hidden items-center gap-2 rounded-full bg-whatsapp px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-whatsapp-dark sm:inline-flex"
+			>
+				<UiIcon name="whatsapp" class="h-4 w-4" />
+				Agendar
+			</a>
+			<button id="nav-toggle" type="button" class="rounded-lg p-2 text-hero-fg lg:hidden [[data-scrolled=true]_&]:text-sweetblack" aria-controls="nav-menu" aria-expanded="false" aria-label="Abrir menu">
+				<UiIcon name="menu" class="h-6 w-6" />
+			</button>
+		</div>
+	</div>
+
+	<div id="nav-menu" class="hidden border-t border-slate-100 bg-white shadow-lg lg:hidden">
+		<ul class="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+			{items.map((item) => (
+				<li>
+					<a href={item.href} class="block rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sand">{item.label}</a>
+				</li>
+			))}
+		</ul>
+	</div>
+</nav>
+
+<script>
+	const nav = document.getElementById("site-nav")!;
+	const toggle = document.getElementById("nav-toggle")!;
+	const menu = document.getElementById("nav-menu")!;
+
+	const update = () => {
+		const open = toggle.getAttribute("aria-expanded") === "true";
+		nav.dataset.scrolled = String(window.scrollY > 24 || open);
+	};
+	window.addEventListener("scroll", update, { passive: true });
+	update();
+
+	const setOpen = (open: boolean) => {
+		toggle.setAttribute("aria-expanded", String(open));
+		toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+		menu.classList.toggle("hidden", !open);
+		update();
+	};
+	toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+	menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+</script>

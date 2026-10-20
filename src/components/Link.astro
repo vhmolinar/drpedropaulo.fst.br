@@ -8,17 +8,39 @@ export interface Props {
 }
 
 const { title, icon, href } = Astro.props;
+
+const styles: Record<string, { gradient: string; label: string; }> = {
+	whatsapp: {
+		gradient: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+		label: 'Agendar consulta agora',
+	},
+	instagram: {
+		gradient: 'linear-gradient(135deg, #7c3aed 0%, #db2777 50%, #ea580c 100%)',
+		label: 'Siga @drpedrofisio95',
+	},
+};
+
+const style = styles[icon] ?? {
+	gradient: 'linear-gradient(135deg, #0f766e 0%, #0d9488 100%)',
+	label: '',
+};
 ---
 
-<div class="relative flex items-center space-x-3 rounded-lg border border-primary bg-white px-6 py-5 hover:bg-primary p-4 shadow-md hover:shadow-xl">
-    <div class="min-w-0 flex-1">
-        <a href={href} target="_blank" class="focus:outline-none">
-            <div style="float:left;margin-right:10px;">
-                <Icon icon={icon} url={href}/>
-            </div>
-            <p class=" text-xl font-medium text-sweetblack">
-                {title}
-            </p>
-        </a>
-    </div>
-</div>
+<a
+	href={href}
+	target="_blank"
+	rel="noopener noreferrer"
+	class="group flex items-center gap-4 rounded-2xl p-5 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+	style={`background: ${style.gradient};`}
+>
+	<div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl" style="background: rgba(255,255,255,0.2);">
+		<Icon icon={icon} url={href} />
+	</div>
+	<div class="flex-1 text-left">
+		<p class="font-bold text-white text-lg leading-tight">{title}</p>
+		<p class="text-white/75 text-sm mt-0.5">{style.label}</p>
+	</div>
+	<svg class="w-5 h-5 text-white/60 flex-shrink-0 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+		<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+	</svg>
+</a>

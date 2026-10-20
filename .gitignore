@@ -21,3 +21,10 @@ pnpm-debug.log*
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# agentic
+.agents
+.claude
+
+# firebase deploy cache
+.firebase/

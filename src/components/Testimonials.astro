@@ -1,0 +1,162 @@
+---
+import UiIcon from "./UiIcon.astro";
+import data from "../data/reviews.json";
+
+const monthsAgo = (date: string) => {
+	const match = date.match(/(\d+|um|uma)\s+(dia|semana|m[eê]s|meses|ano)/i);
+	if (!match) return Infinity;
+	const amount = /^\d+$/.test(match[1]) ? Number(match[1]) : 1;
+	const unit = match[2].toLowerCase();
+	const factor = unit.startsWith("dia") ? 1 / 30 : unit.startsWith("semana") ? 1 / 4 : unit.startsWith("ano") ? 12 : 1;
+	return amount * factor;
+};
+
+const reviews = data.reviews
+	.filter((r) => r.rating === 5 && r.text)
+	.map((r) => ({
+		...r,
+		date: r.date.replace(/^Editad[oa]\s+/i, ""),
+		text: r.text.replace(/\s+/g, " ").replace(/\s+([.,!?;:])/g, "$1").trim(),
+	}))
+	.sort((a, b) => monthsAgo(a.date) - monthsAgo(b.date))
+	.slice(0, 15);
+const rating = data.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1 });
+---
+
+<section id="depoimentos" class="bg-white py-20 lg:py-28" aria-labelledby="depoimentos-titulo">
+	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-10 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:items-end md:text-left">
+			<div>
+				<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Depoimentos</p>
+				<h2 id="depoimentos-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Quem treina aqui, recomenda</h2>
+			</div>
+			<a
+				href={data.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				data-placement="reviews-summary"
+				class="flex items-center gap-4 rounded-2xl bg-sand px-5 py-3 ring-1 ring-slate-200 transition hover:ring-primary/40"
+			>
+				<UiIcon name="google" class="h-8 w-8" />
+				<div class="text-left leading-tight">
+					<p class="flex items-center gap-1.5 text-lg font-bold text-sweetblack">
+						{rating}
+						<span class="flex text-accent">{[1, 2, 3, 4, 5].map(() => <UiIcon name="star" class="h-4 w-4" />)}</span>
+					</p>
+					<p class="text-xs text-slate-600">{data.total} avaliações no Google</p>
+				</div>
+			</a>
+		</div>
+
+		<div class="relative" data-carousel>
+			<ul class="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0" data-track tabindex="0" aria-label="Depoimentos de pacientes no Google">
+				{reviews.map((review) => (
+					<li class="w-[85%] flex-none snap-start sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+						<figure class="flex h-full flex-col rounded-3xl bg-sand p-7 ring-1 ring-slate-200/70">
+							<div class="mb-4 flex text-accent" role="img" aria-label="5 de 5 estrelas">
+								{[1, 2, 3, 4, 5].map(() => <UiIcon name="star" class="h-5 w-5" />)}
+							</div>
+							<blockquote class="flex-1 font-display text-lg italic leading-relaxed text-slate-700 lg:text-xl">
+								<p>“{review.text}”</p>
+							</blockquote>
+							<figcaption class="mt-6 flex items-center gap-3">
+								<span class="relative flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-bold text-white">
+									{review.name.charAt(0)}
+									{review.photo && (
+										<img
+											src={review.photo}
+											alt=""
+											width="44"
+											height="44"
+											loading="lazy"
+											referrerpolicy="no-referrer"
+											class="absolute inset-0 h-full w-full object-cover"
+											onerror="this.remove()"
+										/>
+									)}
+								</span>
+								<span class="leading-tight">
+									<span class="block font-semibold text-sweetblack">{review.name}</span>
+									<span class="text-xs text-slate-600">{review.date} · Google</span>
+								</span>
+							</figcaption>
+						</figure>
+					</li>
+				))}
+			</ul>
+
+			<div class="mt-6 flex items-center justify-center gap-4">
+				<button type="button" class="rounded-full p-2.5 text-slate-600 ring-1 ring-slate-200 transition hover:bg-sand hover:text-primary" data-prev aria-label="Depoimento anterior">
+					<UiIcon name="chevronLeft" class="h-5 w-5" />
+				</button>
+				<div class="hidden sm:flex" data-dots></div>
+				<p class="min-w-[4rem] text-center text-sm font-medium tabular-nums text-slate-600 sm:hidden" data-counter aria-live="polite"></p>
+				<button type="button" class="rounded-full p-2.5 text-slate-600 ring-1 ring-slate-200 transition hover:bg-sand hover:text-primary" data-next aria-label="Próximo depoimento">
+					<UiIcon name="chevronRight" class="h-5 w-5" />
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const INTERVAL = 5500;
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
+		const track = root.querySelector<HTMLElement>("[data-track]")!;
+		const slides = Array.from(track.children) as HTMLElement[];
+		const dots = root.querySelector<HTMLElement>("[data-dots]")!;
+		const counter = root.querySelector<HTMLElement>("[data-counter]");
+		if (slides.length === 0) return;
+
+		const current = () => {
+			const left = track.scrollLeft;
+			return slides.reduce((best, s, i) => (Math.abs(s.offsetLeft - track.offsetLeft - left) < Math.abs(slides[best].offsetLeft - track.offsetLeft - left) ? i : best), 0);
+		};
+		const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+		const goTo = (i: number) => {
+			const index = (i + slides.length) % slides.length;
+			track.scrollTo({ left: slides[index].offsetLeft - track.offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
+		};
+		const next = () => (atEnd() ? goTo(0) : goTo(current() + 1));
+
+		slides.forEach((_, i) => {
+			const dot = document.createElement("button");
+			dot.type = "button";
+			dot.className = "flex h-6 min-w-[1.5rem] items-center justify-center";
+			dot.innerHTML = '<span class="block h-2 w-2 rounded-full bg-slate-300 transition-all [[data-active=true]_&]:w-6 [[data-active=true]_&]:bg-primary"></span>';
+			dot.setAttribute("aria-label", `Ir para o depoimento ${i + 1}`);
+			dot.addEventListener("click", () => goTo(i));
+			dots.appendChild(dot);
+		});
+		const paintDots = () => {
+			const active = atEnd() ? slides.length - 1 : current();
+			Array.from(dots.children).forEach((d, i) => ((d as HTMLElement).dataset.active = String(i === active)));
+			if (counter) counter.textContent = `${active + 1} / ${slides.length}`;
+		};
+		track.addEventListener("scroll", () => requestAnimationFrame(paintDots), { passive: true });
+		paintDots();
+
+		root.querySelector("[data-prev]")!.addEventListener("click", () => goTo(current() - 1));
+		root.querySelector("[data-next]")!.addEventListener("click", next);
+
+		if (reduceMotion) return;
+		let timer: number | undefined;
+		let paused = false;
+		let visible = false;
+		const schedule = () => {
+			window.clearInterval(timer);
+			if (!paused && visible) timer = window.setInterval(next, INTERVAL);
+		};
+		const pause = () => ((paused = true), schedule());
+		const resume = () => ((paused = false), schedule());
+		root.addEventListener("mouseenter", pause);
+		root.addEventListener("mouseleave", resume);
+		root.addEventListener("focusin", pause);
+		root.addEventListener("focusout", resume);
+		track.addEventListener("touchstart", pause, { passive: true });
+		track.addEventListener("touchend", () => window.setTimeout(resume, 4000), { passive: true });
+		new IntersectionObserver(([entry]) => ((visible = entry.isIntersecting), schedule()), { threshold: 0.3 }).observe(root);
+	});
+</script>
