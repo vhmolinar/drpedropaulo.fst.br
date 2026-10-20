@@ -1,5 +1,6 @@
 ---
 import UiIcon from "./UiIcon.astro";
+import { SERVICES } from "../data/services";
 import { ADDRESS, BUSINESS_NAME, HOURS, INSTAGRAM_URL, MAPS_URL, PHONE, TITLE, WHATSAPP_URL } from "../config";
 
 export interface Props {
@@ -11,7 +12,7 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="bg-sweetblack text-slate-400">
-	<div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
+	<div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
 		<div>
 			<div class="mb-3 flex items-center gap-3">
 				<img src="/fisioterapia.png" class="h-9 w-9 opacity-80" alt="" width="36" height="36" loading="lazy" />
@@ -27,6 +28,15 @@ const year = new Date().getFullYear();
 				</a>
 			</div>
 		</div>
+
+		<nav class="text-sm" aria-label="Tratamentos">
+			<p class="mb-2 font-semibold text-white">Tratamentos</p>
+			<ul class="space-y-1.5">
+				{SERVICES.map((s) => (
+					<li><a href={`/${s.slug}`} class="hover:text-white">{s.name} em Uberlândia</a></li>
+				))}
+			</ul>
+		</nav>
 
 		<address class="text-sm not-italic leading-relaxed">
 			<p class="mb-2 font-semibold text-white">{BUSINESS_NAME}</p>

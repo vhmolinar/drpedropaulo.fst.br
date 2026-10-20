@@ -6,7 +6,9 @@ export const TAGLINE = "Fisioterapia, Pilates clínico e reabilitação funciona
 
 export const PHONE = "+55 34 98414-3510"
 export const PHONE_E164 = "+5534984143510"
-export const WHATSAPP_URL = `https://wa.me/5534984143510?text=${encodeURIComponent("Olá, Dr. Pedro! Vim pelo site e gostaria de agendar uma avaliação.")}`
+export const whatsappUrl = (subject = "gostaria de agendar uma avaliação") =>
+	`https://wa.me/5534984143510?text=${encodeURIComponent(`Olá, Dr. Pedro! Vim pelo site e ${subject}.`)}`
+export const WHATSAPP_URL = whatsappUrl()
 export const INSTAGRAM_HANDLE = "drpedrofisio95"
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`
 

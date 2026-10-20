@@ -26,13 +26,18 @@ Static site built with **Astro** + **Tailwind CSS**, deployed to **Firebase Host
 ### Key structure
 
 - `src/pages/index.astro` — Main landing page (sections: hero, services, studio gallery, about, testimonials, steps, contact/map, FAQ, CTA)
+- `src/pages/[slug].astro` — Service landing pages (one per entry in `src/data/services.ts`), e.g. `/pilates-uberlandia`
 - `src/pages/404.astro` — Not-found page (noindex); Firebase serves it for unknown URLs
 - `src/config.ts` — Single source for contact info, address, geo, hours and WhatsApp/Instagram URLs
-- `src/data/` — Content data: `reviews.json` (Google testimonials), `faq.ts`, `media.ts` (gallery videos/images), `schema.ts` (JSON-LD graph), `links/*.md`
-- `src/components/` — Astro components (`Nav`, `Header` (hero), `MediaGallery`, `Testimonials`, `Footer`, `Link`, `Icon`, `UiIcon`)
+- `src/data/` — Content data: `reviews.json` (Google testimonials), `services.ts` (service pages content), `faq.ts` (home FAQ), `media.ts` (gallery videos/images), `schema.ts` (JSON-LD graph), `links/*.md`
+- `src/components/` — Astro components (`Nav`, `Header` (hero), `MediaGallery`, `Testimonials`, `Faq`, `FinalCta`, `FloatingWhatsApp`, `Footer`, `Link`, `Icon`, `UiIcon`)
 - `src/layouts/` — Base HTML layout with meta tags, SEO, analytics (incl. `contact_click` gtag events) and JSON-LD slot. The gtag script loads only on first interaction or 5s after `load`, to keep it out of the critical path
 - `public/fonts/` — Self-hosted Inter and Fraunces (latin subset, preloaded); don't reintroduce Google Fonts links
 - `public/media/` — Optimized WebP images and H.264 videos (no audio) used by the gallery and hero
+
+### Service pages
+
+Each entry in `src/data/services.ts` generates a page at `/<slug>` (built as `<slug>.html` via `build.format: 'file'`, served without extension by Firebase `cleanUrls`). The same data feeds the home service cards, the footer "Tratamentos" links, the home `availableService` schema and each page's JSON-LD (`WebPage`, `BreadcrumbList`, `Service`, `FAQPage`). `reviewKeywords` puts matching testimonials first. When adding a service, also add its URL to `public/sitemap.xml`. Health claims must be validated by Dr. Pedro before publishing.
 
 ### Links system
 

@@ -1,0 +1,204 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Faq from "../components/Faq.astro";
+import FinalCta from "../components/FinalCta.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+import Footer from "../components/Footer.astro";
+import UiIcon from "../components/UiIcon.astro";
+
+import reviews from "../data/reviews.json";
+import { MEDIA } from "../data/media";
+import { SERVICES, type Service } from "../data/services";
+import { serviceSchema } from "../data/schema";
+import { ADDRESS, HOURS, INSTAGRAM_URL, MAPS_URL, SUBTITLE, TAGLINE, whatsappUrl } from "../config";
+
+export function getStaticPaths() {
+	return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+export interface Props {
+	service: Service;
+}
+
+const { service } = Astro.props;
+const media = MEDIA.find((m) => m.src === service.media)!;
+const whatsapp = whatsappUrl(service.whatsappSubject);
+const related = SERVICES.filter((s) => s.slug !== service.slug);
+const rating = reviews.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1 });
+---
+
+<Layout title={service.seoTitle} description={service.description} path={`/${service.slug}`} jsonLd={serviceSchema(service)}>
+	<Nav />
+
+	<header class="relative overflow-hidden bg-hero-bg">
+		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#a7d6b7_0%,_transparent_55%)] opacity-40" aria-hidden="true"></div>
+
+		<div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-24 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-8 lg:pb-20 lg:pt-32">
+			<div>
+				<nav aria-label="Você está em" class="mb-6 text-sm text-hero-muted">
+					<ol class="flex flex-wrap items-center gap-1.5">
+						<li><a href="/" class="hover:text-hero-fg hover:underline">Início</a></li>
+						<li aria-hidden="true"><UiIcon name="chevronRight" class="h-3.5 w-3.5" /></li>
+						<li aria-current="page" class="font-medium text-hero-fg">{service.name}</li>
+					</ol>
+				</nav>
+
+				<p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-hero-accent">{service.eyebrow}</p>
+				<h1 class="font-display text-4xl font-semibold leading-[1.1] text-hero-fg sm:text-5xl">{service.h1}</h1>
+				<p class="mt-6 max-w-xl text-lg leading-relaxed text-hero-muted">{service.intro}</p>
+				<p class="mt-3 text-sm font-medium text-hero-accent">Dr. Pedro Paulo Molinar · {SUBTITLE}</p>
+
+				<div class="mt-8 flex flex-col gap-3 sm:flex-row">
+					<a
+						href={whatsapp}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-placement={`${service.slug}-hero`}
+						class="inline-flex items-center justify-center gap-3 rounded-full bg-cta px-8 py-4 font-semibold text-cta-fg shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-cta-hover"
+					>
+						<UiIcon name="whatsapp" class="h-5 w-5 text-cta-icon" />
+						Agendar pelo WhatsApp
+					</a>
+					<a
+						href={reviews.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						data-placement={`${service.slug}-rating`}
+						class="inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm text-hero-fg ring-2 ring-hero-fg/20 transition hover:bg-hero-fg/5"
+					>
+						<span class="flex text-accent">{[1, 2, 3, 4, 5].map(() => <UiIcon name="star" class="h-4 w-4" />)}</span>
+						<span><strong>{rating}</strong> · {reviews.total} avaliações no Google</span>
+					</a>
+				</div>
+			</div>
+
+			<div class="relative mx-auto w-full max-w-[280px] sm:max-w-[320px]">
+				<div class="absolute -inset-4 rotate-3 rounded-[2.5rem] bg-hero-accent/20" aria-hidden="true"></div>
+				<div class="relative aspect-[9/16] overflow-hidden rounded-[2rem] bg-primary-dark shadow-2xl">
+					{media.type === "video" ? (
+						<video
+							class="h-full w-full object-cover opacity-80"
+							src={media.src}
+							poster={media.poster}
+							width={media.width}
+							height={media.height}
+							muted
+							loop
+							playsinline
+							preload="none"
+							aria-label={media.description}
+							data-autoplay
+						></video>
+					) : (
+						<img class="h-full w-full object-cover" src={media.src} alt={media.description} width={media.width} height={media.height} />
+					)}
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<section class="py-16 lg:py-24">
+			<div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_320px] lg:px-8">
+				<article class="max-w-3xl space-y-12">
+					{service.sections.map((section) => (
+						<section>
+							<h2 class="font-display text-2xl font-semibold text-sweetblack lg:text-3xl">{section.heading}</h2>
+							<div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+								{section.paragraphs.map((p) => <p>{p}</p>)}
+							</div>
+							{section.list && (
+								<ul class="mt-5 space-y-3">
+									{section.list.map((item) => (
+										<li class="flex gap-3 text-slate-700">
+											<UiIcon name="check" class="mt-0.5 h-5 w-5 flex-none text-primary" />
+											<span>{item}</span>
+										</li>
+									))}
+								</ul>
+							)}
+						</section>
+					))}
+
+					<section>
+						<h2 class="font-display text-2xl font-semibold text-sweetblack lg:text-3xl">Indicado para</h2>
+						<ul class="mt-5 flex flex-wrap gap-2.5">
+							{service.indications.map((c) => (
+								<li class="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-200">{c}</li>
+							))}
+						</ul>
+					</section>
+				</article>
+
+				<aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+					<div class="rounded-3xl bg-white p-6 ring-1 ring-slate-200/70">
+						<h2 class="text-base font-bold text-sweetblack">Onde e quando</h2>
+						<div class="mt-4 space-y-4 text-sm text-slate-600">
+							<a href={MAPS_URL} target="_blank" rel="noopener noreferrer" data-placement={`${service.slug}-aside`} class="flex gap-3 hover:text-primary">
+								<UiIcon name="pin" class="h-5 w-5 flex-none text-primary" />
+								<span>{ADDRESS.street} – {ADDRESS.district}<br />{ADDRESS.city} – {ADDRESS.region}</span>
+							</a>
+							<div class="flex gap-3">
+								<UiIcon name="clock" class="h-5 w-5 flex-none text-primary" />
+								<span>{HOURS.map((h) => <span class="block">{h.label}: {h.time}</span>)}</span>
+							</div>
+							<div class="flex gap-3">
+								<UiIcon name="card" class="h-5 w-5 flex-none text-primary" />
+								<span>Particular e Gympass (plano Silver)</span>
+							</div>
+						</div>
+						<a
+							href={whatsapp}
+							target="_blank"
+							rel="noopener noreferrer"
+							data-placement={`${service.slug}-aside`}
+							class="mt-6 flex items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-semibold text-white transition hover:bg-whatsapp-dark"
+						>
+							<UiIcon name="whatsapp" class="h-4 w-4" />
+							Agendar avaliação
+						</a>
+						<a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" data-placement={`${service.slug}-aside`} class="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-slate-600 hover:text-primary">
+							<UiIcon name="instagram" class="h-4 w-4" />
+							Ver o estúdio no Instagram
+						</a>
+					</div>
+
+					<nav class="rounded-3xl bg-white p-6 ring-1 ring-slate-200/70" aria-label="Outros tratamentos">
+						<h2 class="text-base font-bold text-sweetblack">Outros tratamentos</h2>
+						<ul class="mt-3 space-y-1">
+							{related.map((s) => (
+								<li>
+									<a href={`/${s.slug}`} class="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-sand hover:text-primary">
+										{s.name}
+										<UiIcon name="chevronRight" class="h-4 w-4" />
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				</aside>
+			</div>
+		</section>
+
+		<Testimonials keywords={service.reviewKeywords} title="O que dizem os alunos" />
+		<Faq items={service.faq} />
+		<FinalCta href={whatsapp} title="Vamos começar?" text="Chame no WhatsApp para agendar sua avaliação e conhecer o estúdio." />
+	</main>
+
+	<Footer tagline={TAGLINE} />
+	<FloatingWhatsApp href={whatsapp} />
+
+	<script>
+		const video = document.querySelector<HTMLVideoElement>("header video[data-autoplay]");
+		if (video && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			const start = () => {
+				video.preload = "auto";
+				video.play().catch(() => {});
+			};
+			if (document.readyState === "complete") start();
+			else window.addEventListener("load", start, { once: true });
+		}
+	</script>
+</Layout>

@@ -2,6 +2,13 @@
 import UiIcon from "./UiIcon.astro";
 import data from "../data/reviews.json";
 
+export interface Props {
+	keywords?: string[];
+	title?: string;
+}
+
+const { keywords = [], title = "Quem treina aqui, recomenda" } = Astro.props;
+
 const monthsAgo = (date: string) => {
 	const match = date.match(/(\d+|um|uma)\s+(dia|semana|m[eê]s|meses|ano)/i);
 	if (!match) return Infinity;
@@ -11,15 +18,16 @@ const monthsAgo = (date: string) => {
 	return amount * factor;
 };
 
-const reviews = data.reviews
+const all = data.reviews
 	.filter((r) => r.rating === 5 && r.text)
 	.map((r) => ({
 		...r,
 		date: r.date.replace(/^Editad[oa]\s+/i, ""),
 		text: r.text.replace(/\s+/g, " ").replace(/\s+([.,!?;:])/g, "$1").trim(),
 	}))
-	.sort((a, b) => monthsAgo(a.date) - monthsAgo(b.date))
-	.slice(0, 15);
+	.sort((a, b) => monthsAgo(a.date) - monthsAgo(b.date));
+const matches = (text: string) => keywords.some((k) => text.toLowerCase().includes(k.toLowerCase()));
+const reviews = [...all.filter((r) => matches(r.text)), ...all.filter((r) => !matches(r.text))].slice(0, 15);
 const rating = data.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1 });
 ---
 
@@ -28,7 +36,7 @@ const rating = data.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1 })
 		<div class="mb-10 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:items-end md:text-left">
 			<div>
 				<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Depoimentos</p>
-				<h2 id="depoimentos-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">Quem treina aqui, recomenda</h2>
+				<h2 id="depoimentos-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">{title}</h2>
 			</div>
 			<a
 				href={data.url}
