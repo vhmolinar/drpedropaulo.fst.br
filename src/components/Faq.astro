@@ -1,0 +1,30 @@
+---
+import UiIcon from "./UiIcon.astro";
+
+export interface Props {
+	items: { question: string; answer: string }[];
+	title?: string;
+}
+
+const { items, title = "Perguntas frequentes" } = Astro.props;
+---
+
+<section class="py-20 lg:py-28" aria-labelledby="faq-titulo">
+	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-10 text-center">
+			<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">Dúvidas</p>
+			<h2 id="faq-titulo" class="font-display text-3xl font-semibold text-sweetblack lg:text-4xl">{title}</h2>
+		</div>
+		<div class="space-y-3">
+			{items.map((item) => (
+				<details class="group rounded-2xl bg-white ring-1 ring-slate-200/70 open:shadow-sm">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-semibold text-sweetblack [&::-webkit-details-marker]:hidden">
+						<h3>{item.question}</h3>
+						<UiIcon name="chevronDown" class="h-5 w-5 flex-none text-primary transition group-open:rotate-180" />
+					</summary>
+					<p class="px-6 pb-6 leading-relaxed text-slate-600">{item.answer}</p>
+				</details>
+			))}
+		</div>
+	</div>
+</section>

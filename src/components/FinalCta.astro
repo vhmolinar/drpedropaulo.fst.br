@@ -1,0 +1,33 @@
+---
+import UiIcon from "./UiIcon.astro";
+
+export interface Props {
+	href: string;
+	title?: string;
+	text?: string;
+}
+
+const {
+	href,
+	title = "Pronto para se mover sem dor?",
+	text = "Agende sua avaliação fisioterapêutica e receba um plano feito para você.",
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-hero-bg py-20 lg:py-24">
+	<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#a7d6b7_0%,_transparent_60%)] opacity-40" aria-hidden="true"></div>
+	<div class="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+		<h2 class="font-display text-3xl font-semibold text-hero-fg lg:text-5xl">{title}</h2>
+		<p class="mx-auto mt-4 max-w-xl text-lg text-hero-muted">{text}</p>
+		<a
+			href={href}
+			target="_blank"
+			rel="noopener noreferrer"
+			data-placement="final-cta"
+			class="mt-10 inline-flex items-center gap-3 rounded-full bg-cta px-10 py-4 text-lg font-bold text-cta-fg shadow-xl transition hover:-translate-y-1 hover:bg-cta-hover"
+		>
+			<UiIcon name="whatsapp" class="h-6 w-6 text-cta-icon" />
+			Agendar pelo WhatsApp
+		</a>
+	</div>
+</section>

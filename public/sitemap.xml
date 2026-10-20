@@ -2,12 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://drpedropaulo.fst.br/</loc>
-    <lastmod>2026-10-19</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://drpedropaulo.fst.br/media/pedro-paulo-molinar-fisioterapeuta.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/media/estudio-pilates-uberlandia.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/media/pilates-alongamento-cadillac.webp</image:loc></image:image>
+    <image:image><image:loc>https://drpedropaulo.fst.br/media/massoterapia-uberlandia.webp</image:loc></image:image>
     <image:image><image:loc>https://drpedropaulo.fst.br/og-image.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://drpedropaulo.fst.br/pilates-uberlandia</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://drpedropaulo.fst.br/fisioterapia-ortopedica-uberlandia</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://drpedropaulo.fst.br/massoterapia-uberlandia</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

@@ -1,6 +1,7 @@
 import { ADDRESS, BUSINESS_NAME, GEO, INSTAGRAM_URL, MAPS_CID_URL, PHONE_E164, SITE_URL, TITLE } from "../config";
 import { FAQ } from "./faq";
 import { MEDIA } from "./media";
+import { SERVICES, type Service } from "./services";
 
 const businessId = `${SITE_URL}/#business`;
 const personId = `${SITE_URL}/#person`;
@@ -22,7 +23,7 @@ export const homeSchema = {
 			"@id": businessId,
 			name: BUSINESS_NAME,
 			alternateName: `${TITLE} – Fisioterapia e Pilates`,
-			description: "Fisioterapia ortopédica, Pilates clínico e reabilitação funcional no Centro de Uberlândia-MG. Atendimento particular e Gympass/Wellhub.",
+			description: "Fisioterapia ortopédica, Pilates clínico, massoterapia e reabilitação funcional no Centro de Uberlândia-MG. Atendimento particular e Gympass/Wellhub.",
 			url: `${SITE_URL}/`,
 			telephone: PHONE_E164,
 			image: [`${SITE_URL}/og-image.jpg`, `${SITE_URL}/media/estudio-pilates-uberlandia.webp`, `${SITE_URL}/avatar-whatsapp.jpg`],
@@ -45,11 +46,7 @@ export const homeSchema = {
 				{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "11:00" },
 				{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "16:00", closes: "20:00" },
 			],
-			availableService: [
-				{ "@type": "MedicalTherapy", name: "Fisioterapia ortopédica" },
-				{ "@type": "MedicalTherapy", name: "Pilates clínico" },
-				{ "@type": "MedicalTherapy", name: "Reabilitação funcional" },
-			],
+			availableService: SERVICES.map((s) => ({ "@type": "MedicalTherapy", name: s.name, url: `${SITE_URL}/${s.slug}` })),
 			employee: { "@id": personId },
 			sameAs,
 		},
@@ -63,7 +60,7 @@ export const homeSchema = {
 			url: `${SITE_URL}/`,
 			alumniOf: { "@type": "CollegeOrUniversity", name: "Universidade Federal de Uberlândia" },
 			worksFor: { "@id": businessId },
-			knowsAbout: ["Fisioterapia", "Pilates clínico", "Reabilitação funcional", "Fisioterapia ortopédica"],
+			knowsAbout: ["Fisioterapia", "Pilates clínico", "Reabilitação funcional", "Fisioterapia ortopédica", "Massoterapia", "Liberação miofascial"],
 			sameAs: [INSTAGRAM_URL],
 		},
 		{
@@ -86,4 +83,64 @@ export const homeSchema = {
 			publisher: { "@id": businessId },
 		})),
 	],
+};
+
+export const serviceSchema = (service: Service) => {
+	const url = `${SITE_URL}/${service.slug}`;
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "WebPage",
+				"@id": `${url}#webpage`,
+				url,
+				name: service.seoTitle,
+				description: service.description,
+				inLanguage: "pt-BR",
+				isPartOf: { "@id": `${SITE_URL}/#website` },
+				breadcrumb: { "@id": `${url}#breadcrumb` },
+			},
+			{
+				"@type": "BreadcrumbList",
+				"@id": `${url}#breadcrumb`,
+				itemListElement: [
+					{ "@type": "ListItem", position: 1, name: "Início", item: `${SITE_URL}/` },
+					{ "@type": "ListItem", position: 2, name: `${service.name} em Uberlândia`, item: url },
+				],
+			},
+			{
+				"@type": "Service",
+				"@id": `${url}#service`,
+				name: `${service.name} em Uberlândia`,
+				serviceType: service.name,
+				description: service.description,
+				url,
+				areaServed: { "@type": "City", name: "Uberlândia" },
+				provider: {
+					"@type": "Physiotherapy",
+					"@id": businessId,
+					name: BUSINESS_NAME,
+					telephone: PHONE_E164,
+					url: `${SITE_URL}/`,
+					address: {
+						"@type": "PostalAddress",
+						streetAddress: ADDRESS.street,
+						addressLocality: ADDRESS.city,
+						addressRegion: ADDRESS.region,
+						postalCode: ADDRESS.postalCode,
+						addressCountry: ADDRESS.country,
+					},
+				},
+			},
+			{
+				"@type": "FAQPage",
+				"@id": `${url}#faq`,
+				mainEntity: service.faq.map(({ question, answer }) => ({
+					"@type": "Question",
+					name: question,
+					acceptedAnswer: { "@type": "Answer", text: answer },
+				})),
+			},
+		],
+	};
 };
